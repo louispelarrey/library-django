@@ -1,0 +1,20 @@
+<h1>Topic : {{topic.name}}</h1>
+<h2>Description : {{topic.description}}</h2>
+
+<h3>Posts : </h3>
+<ul>
+    {% if posts == None %}
+        <li>No posts</li>
+    {% else %}
+        {% for post in posts %}
+            <li>{{post.content}} - <a href="/board/{{post.topic.id}}/delete_post/{{post.id}}">Supprimer</a></li>
+        {% endfor %}
+    {% endif %}
+</ul>
+
+<h3>Répondre à ce sujet :</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="content" />
+    <input type="submit" value="Envoyer" />
+</form>

@@ -1,0 +1,15 @@
+<h1>Bienvenue sur la partie forum</h1>
+<p>Choissez un topic :</p>
+<ul>
+    {% for topic in topics %}
+        <li><a href="{{topic.id}}"><b>{{topic.name}}</b> - {{topic.description}}</a></li>
+    {% endfor %}
+</ul>
+
+<p>Créer un topic</p>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Nom du topic"/>
+    <input type="text" name="description" placeholder="Description"/>
+    <input type="submit" value="Envoyer" />
+</form>
