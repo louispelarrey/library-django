@@ -3,4 +3,5 @@ data
 # cache
 home/__pycache__
 library/__pycache__
+libraries/__pycache__
 members/__pycache__
