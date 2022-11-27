@@ -41,3 +41,8 @@ def delete_post(request, topic_id, message_id):
     post = Post.objects.get(id=message_id)
     post.delete()
     return redirect('board:topic', id=topic_id)
+
+def delete_topic(request, id):
+    topic = Topic.objects.get(id=id)
+    topic.delete()
+    return redirect('board:board')

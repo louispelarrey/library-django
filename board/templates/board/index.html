@@ -2,7 +2,7 @@
 <p>Choissez un topic :</p>
 <ul>
     {% for topic in topics %}
-        <li><a href="{{topic.id}}"><b>{{topic.name}}</b> - {{topic.description}}</a></li>
+        <li><a href="{{topic.id}}"><b>{{topic.name}}</b></a> - <a href="/board/delete_topic/{{topic.id}}">Supprimer</a></li>
     {% endfor %}
 </ul>
 
