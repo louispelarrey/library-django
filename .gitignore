@@ -1,4 +1,4 @@
 data
 
 # cache
-*/__pycache__
+*/migrations/__pycache__
