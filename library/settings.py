@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'members',
     'board',
     'home',
-    'books'
+    'books',
     'misc',
 ]
 
