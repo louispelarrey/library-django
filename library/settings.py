@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'home',
     'books',
     'misc',
+    'djgeojson',
+    'leaflet',
 ]
 
 MIDDLEWARE = [
