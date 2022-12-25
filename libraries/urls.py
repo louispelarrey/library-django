@@ -19,6 +19,7 @@ from djgeojson.views import GeoJSONLayerView
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from .models import Library
 
 app_name = 'libraries'
@@ -26,4 +27,4 @@ app_name = 'libraries'
 urlpatterns = [
     path('', views.libraries, name='libraries'),
     url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Library, properties=('name', 'address')), name='data')
-        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
