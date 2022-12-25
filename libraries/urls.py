@@ -13,15 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from . import views
+from djgeojson.views import GeoJSONLayerView
+from django.conf.urls import url
+from django.conf.urls.static import static
+from django.conf import settings
+from .models import Library
+
+app_name = 'libraries'
 
 urlpatterns = [
-    path('', include("home.urls")),
-    path('admin/', admin.site.urls),
-    path('members/', include('django.contrib.auth.urls')),
-    path('members/', include('members.urls')),
-    path('board/', include('board.urls')),
-    path('misc/', include('misc.urls')),
-    path('libraries/', include('libraries.urls')),
-]
+    path('', views.libraries, name='libraries'),
+    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Library, properties=('name', 'address')), name='data')
+        ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

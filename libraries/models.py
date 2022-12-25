@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.template.defaultfilters import slugify
+from djgeojson.fields import PointField
 
 User = get_user_model()
 
 class Library(models.Model):
+    geom = PointField(blank = True, null=True)
     name = models.CharField(max_length=255, unique=True, verbose_name='Nom de la librairie')
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     address = models.CharField(max_length=255, verbose_name='Adresse')
@@ -13,7 +15,7 @@ class Library(models.Model):
     statut = models.CharField(max_length=255, default='Actif', verbose_name='Statut de la librairie')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    
     class Meta:
         verbose_name = 'Librairie'
         verbose_name_plural = 'Librairies'
