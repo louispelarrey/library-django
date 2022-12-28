@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django import views
 from books.models import Book, Author, Collection, Editor, Overdue, Category
-from books.forms import AddBookForm
+from books.forms import AddBookForm, AddAuthorForm, AddCategoryForm, AddCollectionForm, AddEditorForm
 
 def book_index(request):
     books = Book.objects.all()
@@ -13,7 +13,7 @@ def book_index(request):
 def add_book(request):
     form = AddBookForm()
     if request.method == 'POST':
-        
+
         if form.is_valid():
             form.save()
             return redirect('books:book_index')
@@ -77,3 +77,51 @@ def delete_book(request, id):
     book = Book.objects.get(id=id)
     book.delete()
     return redirect('books:book_index')
+
+def add_author(request):
+    form = AddAuthorForm()
+    if request.method == 'POST':
+        name = request.POST['name']
+        author = Author(name=name)
+        author.save()
+        return redirect('books:book_index')
+    context = {
+        'form': form
+    }
+    return render(request, 'author/add_author.html' , context)
+
+def add_editor(request):
+    form = AddEditorForm()
+    if request.method == 'POST':
+        name = request.POST['name']
+        editor = Editor(name=name)
+        editor.save()
+        return redirect('books:book_index')
+    context = {
+        'form': form
+    }
+    return render(request, 'editor/add_editor.html' , context)
+
+def add_collection(request):
+    form = AddCollectionForm()
+    if request.method == 'POST':
+        name = request.POST['name']
+        collection = Collection(name=name)
+        collection.save()
+        return redirect('books:book_index')
+    context = {
+        'form': form
+    }
+    return render(request, 'collection/add_collection.html' , context)
+
+def add_category(request):
+    form = AddCategoryForm()
+    if request.method == 'POST':
+        name = request.POST['name']
+        category = Category(name=name)
+        category.save()
+        return redirect('books:book_index')
+    context = {
+        'form': form
+    }
+    return render(request, 'category/add_category.html' , context)
