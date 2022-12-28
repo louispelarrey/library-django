@@ -1,0 +1,15 @@
+{% include "menu.html" %}
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>Books</h1>
+        <ul>
+            {% for book in books %}
+                <li>
+                    <a href="{% url 'book:detail' book.id %}">{{ book.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+</html>
