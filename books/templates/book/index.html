@@ -1,14 +1,16 @@
 {% include "menu.html" %}
+{% include "sidebar.html" %}
 <html>
     <head>
-        <title>Liste des livres</title>
+        <title>Livres</title>
     </head>
     <body>
-        <h1>Books</h1>
+        <h1>Liste des livres</h1>
+        <a class="btn btn-success" href="{% url 'books:add_book' %}">Ajouter un livre</a>
         <ul>
             {% for book in books %}
                 <li>
-                    <a href="{% url 'book:detail' book.id %}">{{ book.title }}</a>
+                    <a href="">{{ book.title }}</a>
                 </li>
             {% endfor %}
         </ul>

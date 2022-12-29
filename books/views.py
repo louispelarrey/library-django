@@ -22,10 +22,10 @@ def add_book(request):
 
         title = request.POST['title']
         description = request.POST['description']
-        author = request.POST['author']
-        editor = request.POST['editor']
-        collection = request.POST['collection']
-        category = request.POST['category']
+        author = Author.objects.get(id=request.POST['author'])
+        editor = Editor.objects.get(id=request.POST['editor'])
+        collection = Collection.objects.get(id=request.POST['collection'])
+        category = Category.objects.get(id=request.POST['category'])
         book = Book(title=title, description=description ,author=author, editor=editor, collection=collection, category=category)
         book.save()
         return redirect('books:books')
@@ -78,50 +78,58 @@ def delete_book(request, id):
     book.delete()
     return redirect('books:books')
 
-def add_author(request):
+def author_index(request):
     form = AddAuthorForm()
+    authors = Author.objects.all()
     if request.method == 'POST':
         name = request.POST['name']
         author = Author(name=name)
         author.save()
-        return redirect('books:books')
+        return redirect('books:authors')
     context = {
-        'form': form
+        'form': form,
+        'authors': authors
     }
-    return render(request, 'author/add_author.html' , context)
+    return render(request, 'author/index.html' , context)
 
-def add_editor(request):
+def editor_index(request):
     form = AddEditorForm()
+    editors = Editor.objects.all()
     if request.method == 'POST':
         name = request.POST['name']
         editor = Editor(name=name)
         editor.save()
-        return redirect('books:books')
+        return redirect('books:editors')
     context = {
-        'form': form
+        'form': form,
+        'editors': editors
     }
-    return render(request, 'editor/add_editor.html' , context)
+    return render(request, 'editor/index.html' , context)
 
-def add_collection(request):
+def collection_index(request):
     form = AddCollectionForm()
+    collections = Collection.objects.all()
     if request.method == 'POST':
         name = request.POST['name']
         collection = Collection(name=name)
         collection.save()
-        return redirect('books:books')
+        return redirect('books:collections')
     context = {
-        'form': form
+        'form': form,
+        'collections': collections
     }
-    return render(request, 'collection/add_collection.html' , context)
+    return render(request, 'collection/index.html' , context)
 
-def add_category(request):
+def category_index(request):
     form = AddCategoryForm()
+    categories = Category.objects.all()
     if request.method == 'POST':
         name = request.POST['name']
         category = Category(name=name)
         category.save()
-        return redirect('books:book')
+        return redirect('books:categories')
     context = {
-        'form': form
+        'form': form,
+        'categories': categories
     }
-    return render(request, 'category/add_category.html' , context)
+    return render(request, 'category/index.html' , context)
