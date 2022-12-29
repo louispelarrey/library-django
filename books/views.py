@@ -16,7 +16,7 @@ def add_book(request):
 
         if form.is_valid():
             form.save()
-            return redirect('books:book_index')
+            return redirect('books:books')
         else:
             form = AddBookForm()
 
@@ -28,7 +28,7 @@ def add_book(request):
         category = request.POST['category']
         book = Book(title=title, description=description ,author=author, editor=editor, collection=collection, category=category)
         book.save()
-        return redirect('books:book_index')
+        return redirect('books:books')
     authors = Author.objects.all()
     editors = Editor.objects.all()
     collections = Collection.objects.all()
@@ -58,7 +58,7 @@ def edit_book(request, id):
         book.category = category
         book.isbn = isbn
         book.save()
-        return redirect('books:book_index')
+        return redirect('books:books')
     book = Book.objects.get(id=id)
     authors = Author.objects.all()
     editors = Editor.objects.all()
@@ -76,7 +76,7 @@ def edit_book(request, id):
 def delete_book(request, id):
     book = Book.objects.get(id=id)
     book.delete()
-    return redirect('books:book_index')
+    return redirect('books:books')
 
 def add_author(request):
     form = AddAuthorForm()
@@ -84,7 +84,7 @@ def add_author(request):
         name = request.POST['name']
         author = Author(name=name)
         author.save()
-        return redirect('books:book_index')
+        return redirect('books:books')
     context = {
         'form': form
     }
@@ -96,7 +96,7 @@ def add_editor(request):
         name = request.POST['name']
         editor = Editor(name=name)
         editor.save()
-        return redirect('books:book_index')
+        return redirect('books:books')
     context = {
         'form': form
     }
@@ -108,7 +108,7 @@ def add_collection(request):
         name = request.POST['name']
         collection = Collection(name=name)
         collection.save()
-        return redirect('books:book_index')
+        return redirect('books:books')
     context = {
         'form': form
     }
@@ -120,7 +120,7 @@ def add_category(request):
         name = request.POST['name']
         category = Category(name=name)
         category.save()
-        return redirect('books:book_index')
+        return redirect('books:book')
     context = {
         'form': form
     }

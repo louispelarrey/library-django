@@ -1,10 +1,11 @@
 {% include "menu.html" %}
+{% include "sidebar.html" %}
 <html>
     <head>
-        <title>Ajouter un livre</title>
+        <title>Livre</title>
     </head>
     <body>
-        <h1>Ajouter</h1>
+        <h1>Ajouter un livre</h1>
         <form method="POST">
             {% csrf_token %}
             <table>

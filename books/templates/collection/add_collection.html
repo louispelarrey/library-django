@@ -1,0 +1,17 @@
+{% include "menu.html" %}
+{% include "sidebar.html" %}
+<html>
+    <head>
+        <title>Collection</title>
+    </head>
+    <body>
+        <h1>Ajouter une collection</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Ajouter">
+        </form>
+    </body>
+</html>
