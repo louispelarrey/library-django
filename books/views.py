@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django import views
-from books.models import Book, Author, Collection, Editor, Overdue, Category
+from books.models import Book, Author, Collection, Editor, Overdue, Category, Library, Overdue
 from books.forms import AddBookForm, AddAuthorForm, AddCategoryForm, AddCollectionForm, AddEditorForm
+import datetime
+from django.contrib.auth.models import User
+import random
 
 def book_index(request):
     books = Book.objects.all()
@@ -9,6 +12,29 @@ def book_index(request):
         'books': books
     }
     return render(request, 'book/index.html', context)
+
+def random_reference():
+    return random.randint(100000, 999999)
+
+def get_reference():
+    reference = random_reference()
+    if Overdue.objects.filter(reference=reference).exists():
+        return get_reference()
+    else:
+        return reference
+
+def add_overdue(request, id):
+    reference = get_reference()
+    loan_date = datetime.datetime.now()
+    due_date = datetime.datetime.now() + datetime.timedelta(days=7)
+
+    book = Book.objects.get(id=id)
+    user = User.objects.get(id=request.user.id)
+    library = Library.objects.get(id=1)
+    overdue = Overdue(reference=reference, loan_date=loan_date, due_date=due_date, book=book, user=user, library=library)
+
+    overdue.save()
+    return redirect('books:books')
 
 def add_book(request):
     form = AddBookForm()
