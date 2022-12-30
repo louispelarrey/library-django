@@ -13,6 +13,13 @@ def book_index(request):
     }
     return render(request, 'book/index.html', context)
 
+def detail_book(request, id):
+    book = Book.objects.get(id=id)
+    context = {
+        'book': book
+    }
+    return render(request, 'book/detail_book.html', context)
+
 def random_reference():
     return random.randint(100000, 999999)
 
@@ -54,6 +61,16 @@ def add_book(request):
         category = Category.objects.get(id=request.POST['category'])
         book = Book(title=title, description=description ,author=author, editor=editor, collection=collection, category=category)
         book.save()
+
+        reference = get_reference()
+        loan_date = datetime.datetime.now()
+        due_date = datetime.datetime.now() + datetime.timedelta(days=7)
+        status = 'Disponible'
+
+        library = Library.objects.get(id=1)
+        overdue = Overdue(reference=reference, loan_date=loan_date, due_date=due_date, status=status, book=book, library=library)
+        overdue.save()
+
         return redirect('books:books')
     authors = Author.objects.all()
     editors = Editor.objects.all()

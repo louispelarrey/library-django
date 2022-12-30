@@ -6,7 +6,6 @@
     </head>
     <body>
         <h1>Liste des livres</h1>
-        <a class="btn btn-success" href="{% url 'books:add_book' %}">Ajouter un livre</a>
         <table class="table table-dark table-hover">
             <thead>
                 <tr>
@@ -14,6 +13,7 @@
                     <th scope="col">Description</th>
                     <th scope="col">Auteur</th>
                     <th scope="col">Date d'ajout</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -23,8 +23,11 @@
                     <td>{{ book.description }}</td>
                     <td>{{ book.author }}</td>
                     <td>{{ book.created_at }}</td>
+                    <td><a class="btn btn-secondary" href="{% url 'books:detail_book' book.id %}">Voir</a></td>
                     {% if user.is_authenticated %}
-                    <td><a class="btn btn-secondary" href="{% url 'books:add_overdue' book.id %}">Emprunter</a></td>
+                        {% if user.is_superuser %}
+                            <td><a class="btn btn-secondary" href="{% url 'books:add_overdue' book.id %}">Ajouter à la librairie</a></td>
+                        {% endif %}
                     {% endif %}
                 </tr>
                 {% endfor %}

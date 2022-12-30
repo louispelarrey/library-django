@@ -26,5 +26,7 @@ app_name = 'libraries'
 
 urlpatterns = [
     path('', views.libraries, name='libraries'),
-    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Library, properties=('name', 'address')), name='data')
+    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Library, properties=('id', 'name', 'address')), name='data'),
+
+    path('libraries/<int:id>', views.library_detail, name='library_detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,17 @@
+{% include "menu.html" %}
+<html>
+    <head>
+        <title>Livre</title>
+    </head>
+    <body>
+        <h1>Fiche du livre</h1>
+        <div class="card">
+            <div class="card-header">
+            <h1>{{ book.title }}</h1> ( Auteur: {{ book.author }}, {{ book.created_at }} )
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ book.description }}</p>
+            </div>
+        </div>
+    </body>
+</html>
