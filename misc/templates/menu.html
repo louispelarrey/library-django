@@ -42,3 +42,8 @@
     </ul>
   </div>
 </nav>
+{% if user.is_authenticated %}
+    {% if user.is_superuser %}
+        {% include "sidebar.html" %}
+    {% endif %}
+{% endif %}
