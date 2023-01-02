@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from books.models import Book, Overdue
 
 def login_user(request):
     if request.method == 'POST':
@@ -36,3 +37,22 @@ def register_user(request):
         messages.error(request, 'Une erreur est survenue')
     context = {}
     return render(request, 'authenticate/register.html', context)
+
+def my_books(request):
+    overdues = Overdue.objects.filter(user=request.user)
+    books = []
+    for overdue in overdues:
+        book = Book.objects.get(id=overdue.book.id)
+        books.append(book)
+    context = {
+        'books': books
+    }
+
+    return render(request, 'my_book/index.html', context)
+
+def edit_overdue(request, id):
+    overdue = Overdue.objects.get(book=id)
+    overdue.status = 'Disponible'
+    overdue.user = None
+    overdue.save()
+    return redirect('members:user_books')
