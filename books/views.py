@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django import views
 from books.models import Book, Author, Collection, Editor, Overdue, Category, Library, Overdue
+from libraries.models import Library, Bookseller
 from books.forms import AddBookForm, AddAuthorForm, AddCategoryForm, AddCollectionForm, AddEditorForm
 import datetime
 from django.contrib.auth.models import User
@@ -69,7 +70,9 @@ def add_book(request):
         due_date = datetime.datetime.now() + datetime.timedelta(days=7)
         status = 'Disponible'
 
-        library = Library.objects.get(id=1)
+        bookseller = Bookseller.objects.get(user=request.user.id)
+        library = Library.objects.get(id=bookseller.library.id)
+        
         overdue = Overdue(reference=reference, loan_date=loan_date, due_date=due_date, status=status, book=book, library=library)
         overdue.save()
 

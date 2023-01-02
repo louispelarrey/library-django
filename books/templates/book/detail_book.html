@@ -32,7 +32,7 @@
                     <td>{{ library.name }}</td>
                     <td>{{ library.address }}, {{ library.postal_code }}, {{ library.city }}</td>
                     {% if user.is_authenticated %}
-                        <td><a class="btn btn-secondary" href="{% url 'library_detail' library.id %}">Voir</a></td>
+                        <td><a class="btn btn-secondary" href="{% url 'libraries:library_detail' library.id %}">Voir</a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}

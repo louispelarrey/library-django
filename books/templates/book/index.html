@@ -1,5 +1,9 @@
 {% include "menu.html" %}
-{% include "sidebar.html" %}
+{% if user.is_authenticated %}
+    {% if user.is_superuser %}
+        {% include "sidebar.html" %}
+    {% endif %}
+{% endif %}
 <html>
     <head>
         <title>Livres</title>
@@ -24,11 +28,6 @@
                     <td>{{ book.author }}</td>
                     <td>{{ book.created_at }}</td>
                     <td><a class="btn btn-secondary" href="{% url 'books:detail_book' book.id %}">Voir</a></td>
-                    {% if user.is_authenticated %}
-                        {% if user.is_superuser %}
-                            <td><a class="btn btn-secondary" href="{% url 'books:add_overdue' book.id %}">Ajouter à la librairie</a></td>
-                        {% endif %}
-                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>

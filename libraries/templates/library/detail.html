@@ -1,5 +1,9 @@
 {% include "menu.html" %}
-{% include "sidebar.html" %}
+{% if user.is_authenticated %}
+    {% if user.is_superuser %}
+        {% include "sidebar.html" %}
+    {% endif %}
+{% endif %}
 <html>
     <head>
         <title>Librairie</title>

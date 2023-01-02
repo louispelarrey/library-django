@@ -29,3 +29,21 @@ class Library(models.Model):
         self.slug = slugify(self.name)
 
         super().save(*args, **kwargs)
+
+class Bookseller(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    library = models.ForeignKey(Library, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Libraire'
+        verbose_name_plural = 'Libraires'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.user.username
+
+    def save(self, *args, **kwargs):
+            
+            super().save(*args, **kwargs)
