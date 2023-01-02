@@ -11,8 +11,8 @@ def libraries(request):
     }
     return render(request, 'map/libraries.html', context)
 
-def library_detail(request, id):
-    library = Library.objects.get(id=id)
+def library_detail(request, slug):
+    library = Library.objects.get(slug=slug)
     overdues = Overdue.objects.filter(library=library)
     context = {
         'library': library,
