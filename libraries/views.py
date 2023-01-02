@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Library
 from books.models import Overdue
+from django.contrib.auth.models import User
 
 # Create your views here.
 def libraries(request):
@@ -18,3 +19,10 @@ def library_detail(request, id):
         'overdues': overdues,
     }
     return render(request, 'library/detail.html', context)
+
+def edit_overdue(request, id):
+    overdue = Overdue.objects.get(id=id)
+    overdue.user = User.objects.get(id=request.user.id)
+    overdue.status = 'Indisponible'
+    overdue.save()
+    return redirect('libraries:libraries')

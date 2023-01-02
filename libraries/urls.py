@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Library, properties=('id', 'name', 'address')), name='data'),
 
     path('libraries/<int:id>', views.library_detail, name='library_detail'),
+
+    path('libraries/<int:id>/edit_overdue', login_required(views.edit_overdue), name='edit_overdue'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -15,8 +15,10 @@ def book_index(request):
 
 def detail_book(request, id):
     book = Book.objects.get(id=id)
+    libraries = Library.objects.filter(overdue__book=id, overdue__status='Disponible')
     context = {
-        'book': book
+        'book': book,
+        'libraries': libraries,
     }
     return render(request, 'book/detail_book.html', context)
 

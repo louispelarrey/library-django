@@ -1,4 +1,5 @@
 {% include "menu.html" %}
+{% load i18n %}
 <html>
     <head>
         <title>Livre</title>
@@ -7,11 +8,36 @@
         <h1>Fiche du livre</h1>
         <div class="card">
             <div class="card-header">
-            <h1>{{ book.title }}</h1> ( Auteur: {{ book.author }}, {{ book.created_at }} )
+            <h2>{{ book.title }}</h2>
             </div>
             <div class="card-body">
+                <h3>Écrit par {{ book.author }}, {% language 'fr' %} {{ book.created_at|date:"d F Y" }} {% endlanguage %} )</h3>
                 <p class="card-text">{{ book.description }}</p>
             </div>
         </div>
+
+        {% if libraries %}
+        <h1>Disponible chez</h1>
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for library in libraries %}
+                <tr>
+                    <td>{{ library.name }}</td>
+                    <td>{{ library.address }}, {{ library.postal_code }}, {{ library.city }}</td>
+                    {% if user.is_authenticated %}
+                        <td><a class="btn btn-secondary" href="{% url 'library_detail' library.id %}">Voir</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </body>
 </html>

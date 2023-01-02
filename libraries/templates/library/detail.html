@@ -8,34 +8,43 @@
         <h1>Fiche de la librairie</h1>
         <div class="card">
             <div class="card-header">
-            <h1>{{ library.name }}</h1> ( Adresse: {{ library.address }}, {{ library.postal_code }}, {{ library.city }} )
+            <h2>{{ library.name }}</h2>
+            <p>Adresse: {{ library.address }}, {{ library.postal_code }}, {{ library.city }}</p>
             </div>
-            <table class="table table-dark table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Auteur</th>
-                        <th scope="col">Date d'ajout</th>
-                        <th scope="col">Statut</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for overdue in overdues %}
-                    <tr>
-                        <td>{{ overdue.book.title }}</td>
-                        <td>{{ overdue.book.description }}</td>
-                        <td>{{ overdue.book.author }}</td>
-                        <td>{{ overdue.book.created_at }}</td>
-                        <td>{{ overdue.status }}</td>
-                        {% if user.is_authenticated %}
-                            <td><a class="btn btn-secondary" href="">Emprunter</a></td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         </div>
+
+        {% if overdues %}
+        <h1>Liste des livres</h1>
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Auteur</th>
+                    <th scope="col">Date d'ajout</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for overdue in overdues %}
+                <tr>
+                    <td>{{ overdue.book.title }}</td>
+                    <td>{{ overdue.book.description }}</td>
+                    <td>{{ overdue.book.author }}</td>
+                    <td>{{ overdue.book.created_at }}</td>
+                    <td>{{ overdue.status }}</td>
+                    {% if user.is_authenticated %}
+                        {% if overdue.status == 'Disponible' %}
+                            <td><a class="btn btn-secondary" href="{% url 'libraries:edit_overdue' overdue.id %}">Emprunter</a></td>
+                        {% else %}
+                            <td>Emprunté par {{ overdue.user.username }}</td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </body>
 </html>
