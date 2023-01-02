@@ -22,4 +22,7 @@ urlpatterns = [
     path('login_user/', views.login_user, name='login'),
     path('logout_user/', views.logout_user, name='logout'),
     path('register_user/', views.register_user, name='register'),
+
+    path('my_books/', views.my_books, name='user_books'),
+    path('my_books/<int:id>/', views.edit_overdue, name='edit_overdue'),
 ]
