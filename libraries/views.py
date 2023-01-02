@@ -11,6 +11,13 @@ def libraries(request):
     }
     return render(request, 'map/libraries.html', context)
 
+def library_index(request):
+    libraries = Library.objects.all()
+    context = {
+        'libraries': libraries
+    }
+    return render(request, 'library/index.html', context)
+    
 def library_detail(request, slug):
     library = Library.objects.get(slug=slug)
     overdues = Overdue.objects.filter(library=library)

@@ -26,6 +26,7 @@ app_name = 'libraries'
 
 urlpatterns = [
     path('', views.libraries, name='libraries'),
+    path('libraries/', views.library_index, name='library_index'),
     url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Library, properties=('slug', 'name', 'address')), name='data'),
 
     path('libraries/<str:slug>', views.library_detail, name='library_detail'),

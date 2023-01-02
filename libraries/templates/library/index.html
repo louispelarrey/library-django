@@ -1,0 +1,32 @@
+{% include "menu.html" %}
+{% if user.is_authenticated %}
+    {% if user.is_superuser %}
+        {% include "sidebar.html" %}
+    {% endif %}
+{% endif %}
+<html>
+    <head>
+        <title>Librairies</title>
+    </head>
+    <body>
+        <h1>Liste des librairies</h1>
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for library in libraries %}
+                <tr>
+                    <td>{{ library.name }}</td>
+                    <td>{{ library.address }}, {{ library.postal_code }}, {{ library.city }}</td>
+                    <td><a class="btn btn-secondary" href="{% url 'libraries:library_detail' library.slug %}">Voir la fiche</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
