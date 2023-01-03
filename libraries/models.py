@@ -6,13 +6,10 @@ from djgeojson.fields import PointField
 User = get_user_model()
 
 class Library(models.Model):
-    geom = PointField(blank = True, null=True)
     name = models.CharField(max_length=255, unique=True, verbose_name='Nom de la librairie')
+    description = models.TextField(verbose_name='Description de la librairie', blank=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
-    address = models.CharField(max_length=255, verbose_name='Adresse')
-    city = models.CharField(max_length=255, verbose_name='Ville')
-    postal_code = models.CharField(max_length=255, verbose_name='Code postal')
-    statut = models.CharField(max_length=255, default='Actif', verbose_name='Statut de la librairie')
+    geom = PointField(blank = True, null=True)  
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     

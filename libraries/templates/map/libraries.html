@@ -1,18 +1,69 @@
 {% include "menu.html" %}
 {% load leaflet_tags %}
+{% load static %}
 <html>
   <head>
     {% leaflet_js %}
     {% leaflet_css %}
     <style>
       .leaflet-container { height: 100%; }
+
     </style>
     <script>
         const dataurl = '{% url "libraries:data" %}';
 
         window.addEventListener("map:init", event => {
             const map = event.detail.map;
-            map.setView([48.856614, 2.3522219], 12);
+            map.setView([48.856614, 2.3522219], 13);
+
+            //load json from arrondissements.json
+            const arrondissements = JSON.parse('{% include "map/assets/json/arrondissements.geojson" %}');
+            console.log(arrondissements)
+
+            //there are 20 arrondissements in Paris, make each of of them different color
+            const arrondissementColors = [
+                "#6681c3",
+                "#bb896f",
+                "#396a38",
+                "#9ad9c1",
+                "#1a3c45",
+                "#744e90",
+                "#c7a122",
+                "#9af822",
+                "#a43424",
+                "#62936d",
+                "#e2e208",
+                "#41ba97",
+                "#d755ea",
+                "#9400d3",
+                "#ff0000",
+                "#126000",
+                "#471f4c",
+                "#00ff00",
+                "#0000ff",
+                "#4b0082",
+            ];
+            //Make the map write at it's center c_ar which is the arrondissement number
+            L.geoJson(arrondissements, {
+                style: function (feature) {
+                    const {c_ar} = feature.properties;
+                    return {
+                        color: arrondissementColors[c_ar - 1],
+                        weight: 3,
+                        opacity: 1.5,
+                        fillOpacity: 0.5,
+                    };
+                },
+                onEachFeature: function onEachFeature(feature, layer) {
+                    const {c_ar, l_ar} = feature.properties;
+                    const content = `<h4>${l_ar}</h4>`;
+                    layer.bindPopup(content, {permanent: true, direction:"center"})
+
+                }
+            }).addTo(map);
+
+            //load json from libraries.json
+
 
             fetch(dataurl)
                 .then(resp => {
@@ -21,8 +72,8 @@
                 .then(data => {
                     L.geoJson(data, {
                         onEachFeature: function onEachFeature(feature, layer) {
-                        const {slug, name, address} = feature.properties;
-                        const content = `<h2>${name}</h2><p>${address}</p><a href="libraries/${slug}">Voir la fiche</a>`;
+                        const {slug, name, description} = feature.properties;
+                        const content = `<h2>${name}</h2><p>${description}</p><a href="libraries/${slug}">Voir la fiche</a>`;
                         layer.bindPopup(content);
                     }}).addTo(map);
                 });

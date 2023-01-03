@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-header">
             <h2>{{ library.name }}</h2>
-            <p>Adresse: {{ library.address }}, {{ library.postal_code }}, {{ library.city }}</p>
+            <p>Description: {{ library.description }}</p>
             </div>
         </div>
 
@@ -21,7 +21,6 @@
                     <th scope="col">Description</th>
                     <th scope="col">Auteur</th>
                     <th scope="col">Date d'ajout</th>
-                    <th scope="col">Statut</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -32,7 +31,6 @@
                     <td>{{ overdue.book.description }}</td>
                     <td>{{ overdue.book.author }}</td>
                     <td>{{ overdue.book.created_at }}</td>
-                    <td>{{ overdue.status }}</td>
                     {% if user.is_authenticated %}
                         {% if overdue.status == 'Disponible' %}
                             <td><a class="btn btn-secondary" href="{% url 'libraries:edit_overdue' overdue.id %}">Emprunter</a></td>

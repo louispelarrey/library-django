@@ -17,7 +17,7 @@
                 {% for library in libraries %}
                 <tr>
                     <td>{{ library.name }}</td>
-                    <td>{{ library.address }}, {{ library.postal_code }}, {{ library.city }}</td>
+                    <td>{{ library.description }}</td>
                     <td><a class="btn btn-secondary" href="{% url 'libraries:library_detail' library.slug %}">Voir la fiche</a></td>
                 </tr>
                 {% endfor %}
