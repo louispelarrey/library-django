@@ -24,4 +24,5 @@ urlpatterns = [
     path('board/', include('board.urls')),
     path('misc/', include('misc.urls')),
     path('libraries/', include('libraries.urls')),
+    path('books/', include('books.urls')),
 ]

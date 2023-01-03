@@ -113,7 +113,7 @@ class Overdue(models.Model):
     due_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=255, default='En cours', verbose_name='Statut de l\'emprunt')
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True ,default=None)
     library = models.ForeignKey(Library, on_delete=models.CASCADE)
 
     class Meta:
