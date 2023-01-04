@@ -8,6 +8,7 @@ from libraries.models import Library, Bookseller
 from books.models import Book, Author, Collection, Editor, Overdue, Category, Library, Overdue
 from books.forms import AddBookForm, AddAuthorForm, AddCategoryForm, AddCollectionForm, AddEditorForm
 import datetime, random
+from django.utils import timezone
 
 def login_user(request):
     if request.method == 'POST':
@@ -44,8 +45,11 @@ def register_user(request):
 
 def my_books(request):
     overdues = Overdue.objects.filter(user=request.user)
+    overdues_late = overdues.filter(due_date__lt=timezone.now())
+
     context = {
-        'overdues': overdues
+        'overdues': overdues,
+        'overdues_late': overdues_late
     }
 
     return render(request, 'my_book/index.html', context)
