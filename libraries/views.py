@@ -26,10 +26,3 @@ def library_detail(request, slug):
         'overdues': overdues,
     }
     return render(request, 'library/detail.html', context)
-
-def edit_overdue(request, id):
-    overdue = Overdue.objects.get(id=id)
-    overdue.user = User.objects.get(id=request.user.id)
-    overdue.status = 'Indisponible'
-    overdue.save()
-    return redirect('libraries:libraries')
