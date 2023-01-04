@@ -24,5 +24,10 @@ urlpatterns = [
     path('register_user/', views.register_user, name='register'),
 
     path('my_books/', views.my_books, name='user_books'),
-    path('my_books/<int:id>/', views.edit_overdue, name='edit_overdue'),
+    path('my_books/<str:reference>/add', views.add_overdue, name='add_overdue'),
+    path('my_books/<str:reference>/giveback', views.edit_overdue, name='edit_overdue'),
+
+    path('my_library/', views.my_library, name='user_library'),
+    path('add_book/', views.add_book, name='add_book')
+
 ]

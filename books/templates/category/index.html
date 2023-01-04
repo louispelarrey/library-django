@@ -4,15 +4,6 @@
         <title>Catégorie</title>
     </head>
     <body>
-        <h1>Ajouter une catégorie</h1>
-        <form method="POST">
-            {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
-            <input type="submit" value="Ajouter">
-        </form>
-
         <h1>Liste des catégories</h1>
         <table>
             <tr>
