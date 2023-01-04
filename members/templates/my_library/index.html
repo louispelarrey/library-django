@@ -1,0 +1,41 @@
+{% include "menu.html" %}
+<html>
+    <head>
+        <title>Ma librairie</title>
+    </head>
+    <body>
+        <h1>Description</h1>
+        <p>
+            Nom : {{ library.name }}<br>
+            Description : {{ library.description }}<br>
+        </p>
+        <h1>Liste des livres</h1>
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Editeur</th>
+                    <th>Collection</th>
+                    <th>Catégorie</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author.name }}</td>
+                    <td>{{ book.editor.name }}</td>
+                    <td>{{ book.collection.name }}</td>
+                    <td>{{ book.category.name }}</td>
+                    <td>
+                        <a href="">Modifier</a>
+                        <a href="">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

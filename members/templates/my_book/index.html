@@ -16,13 +16,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for book in books %}
+                {% for overdue in overdues %}
                 <tr>
-                    <td>{{ book.title }}, {{ book.category }}</td>
-                    <td>{{ book.description }}</td>
-                    <td>{{ book.author }}</td>
-                    <td>{{ book.created_at }}</td>
-                    <td><a class="btn btn-secondary" href="{% url 'members:edit_overdue' book.id %}">Rendre</a></td>
+                    <td>{{ overdue.book.title }}</td>
+                    <td>{{ overdue.book.description }}</td>
+                    <td>{{ overdue.book.author }}</td>
+                    <td>{{ overdue.book.created_at }}</td>
+                    <td><a class="btn btn-secondary" href="{% url 'books:detail_book' overdue.book.id %}">Voir</a></td>
+                    <td><a class="btn btn-secondary" href="{% url 'members:edit_overdue' overdue.reference %}">Rendre</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
