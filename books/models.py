@@ -83,8 +83,8 @@ class Category(models.Model):
         super().save(*args, **kwargs)
 
 class Book(models.Model):
-    title = models.CharField(max_length=255, unique=True, verbose_name='Titre')
-    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    title = models.CharField(max_length=255, verbose_name='Titre')
+    slug = models.SlugField(max_length=255, blank=True)
     description = models.TextField(verbose_name='Description')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
