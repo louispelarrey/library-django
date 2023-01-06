@@ -1,0 +1,34 @@
+{% include "menu.html" %}
+<html>
+    <head>
+        <title>Club</title>
+    </head>
+    <body>
+        <h1>Liste des clubs</h1>
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if clubs|length > 0 %}
+                {% for club in clubs %}
+                <tr>
+                    <td>{{ club.name }}</td>
+                    <td>
+                        <a href="">Modifier</a>
+                        <a href="">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2">Aucun club</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </body>
+</html>

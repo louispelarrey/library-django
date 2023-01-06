@@ -49,3 +49,44 @@ class Session(models.Model):
         self.slug = slugify(self.date)
 
         super().save(*args, **kwargs)
+
+class Member(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Utilisateur')
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, verbose_name='Club')
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Membre'
+        verbose_name_plural = 'Membres'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.user
+
+    def save(self, *args, **kwargs):
+
+        self.slug = slugify(self.user)
+
+        super().save(*args, **kwargs)
+
+class Participant(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Utilisateur')
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, verbose_name='Session')
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Participant'
+        verbose_name_plural = 'Participants'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.user
+
+    def save(self, *args, **kwargs):
+
+        self.slug = slugify(self.user)
+
+        super().save(*args, **kwargs)
+

@@ -5,8 +5,10 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from books.models import Book, Overdue
 from libraries.models import Library, Bookseller
+from clubs.models import Club, Session, Member
 from books.models import Book, Author, Collection, Editor, Overdue, Category, Library, Overdue
-from books.forms import AddBookForm, AddAuthorForm, AddCategoryForm, AddCollectionForm, AddEditorForm
+from books.forms import AddBookForm
+from clubs.forms import AddClubForm, AddSessionForm
 import datetime, random
 from django.utils import timezone
 
@@ -43,6 +45,8 @@ def register_user(request):
     context = {}
     return render(request, 'authenticate/register.html', context)
 
+######################################### USERS #########################################
+
 def my_books(request):
     overdues = Overdue.objects.filter(user=request.user)
     overdues_late = overdues.filter(due_date__lt=timezone.now())
@@ -53,6 +57,24 @@ def my_books(request):
     }
 
     return render(request, 'my_book/index.html', context)
+
+def add_overdue(request, reference):
+    overdue = Overdue.objects.get(reference=reference)
+    overdue.loan_date = datetime.datetime.now()
+    overdue.due_date = datetime.datetime.now() + datetime.timedelta(days=7)
+    overdue.status = 'Indisponible'
+    overdue.user = User.objects.get(id=request.user.id)
+    overdue.save()
+    return redirect('books:books')
+    
+def edit_overdue(request, reference):
+    overdue = Overdue.objects.get(reference=reference)
+    overdue.status = 'Disponible'
+    overdue.user = None
+    overdue.save()
+    return redirect('members:user_books')
+
+######################################### BOOKSELLER #########################################
 
 def my_library(request):
     bookseller = Bookseller.objects.get(user=request.user)
@@ -123,18 +145,45 @@ def add_book(request):
     }
     return render(request, 'my_library/add_book.html', context)
 
-def add_overdue(request, reference):
-    overdue = Overdue.objects.get(reference=reference)
-    overdue.loan_date = datetime.datetime.now()
-    overdue.due_date = datetime.datetime.now() + datetime.timedelta(days=7)
-    overdue.status = 'Indisponible'
-    overdue.user = User.objects.get(id=request.user.id)
-    overdue.save()
-    return redirect('books:books')
-    
-def edit_overdue(request, reference):
-    overdue = Overdue.objects.get(reference=reference)
-    overdue.status = 'Disponible'
-    overdue.user = None
-    overdue.save()
-    return redirect('members:user_books')
+def my_clubs(request):
+    user = request.user
+    bookseller = Bookseller.objects.get(user=user)
+    library = Library.objects.get(bookseller=bookseller)
+    clubs = Club.objects.filter(library=library)
+    context = {
+        'clubs': clubs
+    }
+    return render(request, 'my_library/clubs.html', context)
+
+def add_club(request):
+    form = AddClubForm()
+    bookseller = Bookseller.objects.get(user=request.user.id)
+    library = Library.objects.get(id=bookseller.library.id)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('members:user_clubs')
+        else:
+            form = AddClubForm()
+
+        name = request.POST['name']
+        description = request.POST['description']
+        capacity = request.POST['capacity']
+
+        books = Book.objects.get(id=request.POST['book'])
+
+        club = Club(name=name, description=description, capacity=capacity, library=library)
+        club.save()
+        return redirect('members:user_clubs')
+
+    overdues = Overdue.objects.filter(library=library)
+    books = []
+    for overdue in overdues:
+        book = Book.objects.get(id=overdue.book.id)
+        books.append(book)
+    context = {
+        'books': books,
+        'form': form
+    }
+    return render(request, 'my_library/add_club.html', context)

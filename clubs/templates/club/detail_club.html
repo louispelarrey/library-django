@@ -1,0 +1,19 @@
+{% include "menu.html" %}
+{% load i18n %}
+<html>
+    <head>
+        <title>Club</title>
+    </head>
+    <body>
+        <h1>Fiche du club</h1>
+        <div class="card">
+            <div class="card-header">
+            <h2>{{ club.name }}</h2>
+            </div>
+            <div class="card-body">
+                <h3>Créé le {% language 'fr' %} {{ club.created_at|date:"d F Y" }} {% endlanguage %} )</h3>
+                <p class="card-text">{{ club.description }}</p>
+            </div>
+        </div>
+    </body>
+</html>

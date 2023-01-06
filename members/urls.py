@@ -28,6 +28,8 @@ urlpatterns = [
     path('my_books/<str:reference>/giveback', views.edit_overdue, name='edit_overdue'),
 
     path('my_library/', views.my_library, name='user_library'),
-    path('add_book/', views.add_book, name='add_book')
+    path('add_book/', views.add_book, name='add_book'),
 
+    path('my_clubs/', views.my_clubs, name='user_clubs'),
+    path('my_clubs/add', views.add_club, name='add_club'),
 ]
