@@ -9,7 +9,8 @@ class Library(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Nom de la librairie')
     description = models.TextField(verbose_name='Description de la librairie', blank=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
-    geom = PointField(blank = True, null=True)  
+    geom = PointField(blank = True, null=True)
+    arr = models.CharField(max_length=255, verbose_name='Arrondissement', blank=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
