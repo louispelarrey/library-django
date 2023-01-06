@@ -89,9 +89,9 @@
          setArrOnMap();
 
          map.setView([48.856614, 2.3522219], 13);
+         map.options.maxBounds = L.latLngBounds(L.latLng(48.79, 2.2), L.latLng(48.92, 2.5));
          map.options.minZoom = 12;
          map.options.maxZoom = 18;
-         map.options.maxBounds = map.getBounds();
       });
    </script>
 </head>
