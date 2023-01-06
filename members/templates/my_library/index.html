@@ -4,11 +4,6 @@
         <title>Ma librairie</title>
     </head>
     <body>
-        <h1>Description</h1>
-        <p>
-            Nom : {{ library.name }}<br>
-            Description : {{ library.description }}<br>
-        </p>
         <h1>Liste des livres</h1>
         <a class="btn btn-secondary" href="{% url 'members:add_book' %}">Ajouter un livre</a>
         <table class="table table-dark table-hover">

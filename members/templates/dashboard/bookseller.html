@@ -1,0 +1,59 @@
+{% include "menu.html" %}
+<html>
+    <head>
+        <title>Dashboard</title>
+    </head>
+    <body>
+        <h1>Dashboard libraire</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ library.name }}</h6>
+                            <p class="card-text">{{ library.description }}</p>
+                            <a class="btn btn-secondary" href="" class="card-link">Modifier</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Livre(s) de la librairie</h5>
+                            <p class="card-text">
+                                {% for book in books %}
+                                    <a href="">{{ book.title }}</a><br>
+                                {% endfor %}
+                            </p>
+                            <a class="btn btn-secondary" href="" class="card-link">Modifier</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Retard(s)</h5>
+                            <p class="card-text">
+                                {% for overdue_late in overdues_late %}
+                                    <a href="">{{ overdues_late.book.title }}</a><br>
+                                {% endfor %}
+                            </p>
+                            <a class="btn btn-secondary" href="" class="card-link">Modifier</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Session(s)</h5>
+                            <h6 class="card-subtitle mb-2 text-muted"></h6>
+                            <p class="card-text"></p>
+                            <a class="btn btn-secondary" href="" class="card-link">Modifier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

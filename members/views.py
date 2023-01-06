@@ -45,7 +45,32 @@ def register_user(request):
     context = {}
     return render(request, 'authenticate/register.html', context)
 
+def dashboard(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            bookseller = Bookseller.objects.get(user=request.user)
+            library = Library.objects.get(id=bookseller.library.id)
+            overdues = Overdue.objects.filter(library=library)
+            overdues_late = overdues.filter(due_date__lt=timezone.now())
+            books = []
+            for overdue in overdues:
+                books.append(overdue.book)
+            context = {
+                'library': library,
+                'books': books,
+                'overdues': overdues,
+                'overdues_late': overdues_late
+            }
+            return render(request, 'dashboard/bookseller.html', context)
+        else:
+            return render(request, 'dashboard/user.html')
+    else:
+        return redirect('members:login')
+
 ######################################### USERS #########################################
+
+def bookseller_dashboard(request):
+    return render(request, 'dashboard/bookseller.html')
 
 def my_books(request):
     overdues = Overdue.objects.filter(user=request.user)
@@ -74,6 +99,12 @@ def edit_overdue(request, reference):
     overdue.save()
     return redirect('members:user_books')
 
+def join_club(request, id):
+    club = Club.objects.get(id=id)
+    member = Member(club=club, user=request.user)
+    member.save()
+    return redirect('clubs:clubs')
+
 ######################################### BOOKSELLER #########################################
 
 def my_library(request):
@@ -86,7 +117,6 @@ def my_library(request):
         books.append(book)
 
     context = {
-        'library': library,
         'books': books
     }
     return render(request, 'my_library/index.html', context)
@@ -173,7 +203,7 @@ def add_club(request):
 
         books = Book.objects.get(id=request.POST['book'])
 
-        club = Club(name=name, description=description, capacity=capacity, library=library)
+        club = Club(name=name, description=description, capacity=capacity, library=library, book=books)
         club.save()
         return redirect('members:user_clubs')
 

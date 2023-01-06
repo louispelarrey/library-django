@@ -12,7 +12,7 @@ class Club(models.Model):
     description = models.TextField(verbose_name='Description du club')
     capacity = models.PositiveIntegerField(verbose_name='Capacité du club')
     library = models.ForeignKey(Library, on_delete=models.CASCADE, verbose_name='Bibliothèque')
-    books = models.ManyToManyField(Book, verbose_name='Livres')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Livre')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

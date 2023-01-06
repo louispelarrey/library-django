@@ -23,9 +23,11 @@ urlpatterns = [
     path('logout_user/', views.logout_user, name='logout'),
     path('register_user/', views.register_user, name='register'),
 
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('my_books/', views.my_books, name='user_books'),
     path('my_books/<str:reference>/add', views.add_overdue, name='add_overdue'),
     path('my_books/<str:reference>/giveback', views.edit_overdue, name='edit_overdue'),
+    path('clubs/join/<int:club_id>', views.join_club, name='join_club'),
 
     path('my_library/', views.my_library, name='user_library'),
     path('add_book/', views.add_book, name='add_book'),

@@ -10,6 +10,8 @@
             <thead>
                 <tr>
                     <th>Nom</th>
+                    <th>Nombre de membres</th>
+                    <th>Livre</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -18,6 +20,8 @@
                 {% for club in clubs %}
                 <tr>
                     <td>{{ club.name }}</td>
+                    <td>{{ club.members|length }}/{{ club.capacity }}</td>
+                    <td>{{ club.book.title }}</td>
                     <td>
                         <a class="btn btn-warning" href="">Modifier</a>
                         <a class="btn btn-danger" href="">Supprimer</a>
