@@ -11,6 +11,7 @@
                 <tr>
                     <th>Titre</th>
                     <th>Auteur</th>
+                    <th>Description</th>
                     <th>Editeur</th>
                     <th>Collection</th>
                     <th>Catégorie</th>
@@ -18,10 +19,12 @@
                 </tr>
             </thead>
             <tbody>
+            {% if books|length > 0 %}
                 {% for book in books %}
                 <tr>
                     <td>{{ book.title }}</td>
                     <td>{{ book.author.name }}</td>
+                    <td>{{ book.description }}</td>
                     <td>{{ book.editor.name }}</td>
                     <td>{{ book.collection.name }}</td>
                     <td>{{ book.category.name }}</td>
@@ -31,6 +34,11 @@
                     </td>
                 </tr>
                 {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2">Aucun livre</td>
+                </tr>
+            {% endif %}
             </tbody>
         </table>
     </body>

@@ -23,14 +23,14 @@
                     <td>{{ club.members|length }}/{{ club.capacity }}</td>
                     <td>{{ club.book.title }}</td>
                     <td>
-                        <a class="btn btn-warning" href="">Modifier</a>
+                        <a class="btn btn-warning" href="{% url 'members:show_club' club.id %}">Voir</a>
                         <a class="btn btn-danger" href="">Supprimer</a>
                     </td>
                 </tr>
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="2">Aucun club</td>
+                    <td class="text-center" colspan="4">Aucun club</td>
                 </tr>
             {% endif %}
             </tbody>

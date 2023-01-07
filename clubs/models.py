@@ -42,11 +42,9 @@ class Session(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
     def save(self, *args, **kwargs):
-
-        self.slug = slugify(self.date)
 
         super().save(*args, **kwargs)
 
@@ -62,11 +60,9 @@ class Member(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
     def save(self, *args, **kwargs):
-
-        self.slug = slugify(self.user)
 
         super().save(*args, **kwargs)
 
@@ -82,11 +78,9 @@ class Participant(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.user
+        return str(self.user)
 
     def save(self, *args, **kwargs):
-
-        self.slug = slugify(self.user)
 
         super().save(*args, **kwargs)
 

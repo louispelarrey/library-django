@@ -14,6 +14,4 @@ class AddClubForm(forms.Form):
         fields = ['name', 'description', 'capacity', 'book']
 
 class AddSessionForm(forms.Form):
-    date = forms.DateField(required=True)
-    club = forms.ModelChoiceField(queryset=Club.objects.all())
-
+    date = forms.DateTimeField(required=True)

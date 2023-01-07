@@ -12,3 +12,12 @@ def club_index(request):
     }
     return render(request, 'club/index.html', context)
 
+def detail_club(request, club_id):
+    club = Club.objects.get(id=club_id)
+    sessions = Session.objects.filter(club=club)
+    context = {
+        'club': club,
+        'sessions': sessions
+    }
+    return render(request, 'club/detail_club.html', context)
+

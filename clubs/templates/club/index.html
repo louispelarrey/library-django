@@ -10,6 +10,9 @@
                 <tr>
                     <th>Nom</th>
                     <th>Description</th>
+                    <th>Capacité</th>
+                    <th>Librairie</th>
+                    <th>Livre</th>
                     <th></th>
                 </tr>
             </thead>
@@ -19,16 +22,22 @@
                 <tr>
                     <td>{{ club.name }}</td>
                     <td>{{ club.description }}</td>
+                    <td>{{ club.members|length }}/{{ club.capacity }}</td>
+                    <td>{{ club.library.name }}</td>
+                    <td>{{ club.book.title }}</td>
                     <td>
+                        <a class="btn btn-secondary" href="{% url 'clubs:detail_club' club.id %}">Voir</a>
                         {% if user.is_authenticated %}
-                            <a href="{% url 'members:join_club' club.id %}">Rejoindre</a>
+                            {% if user.is_staff == "false" %}
+                                <a href="{% url 'members:join_club' club.id %}">Rejoindre</a>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="2">Aucun club</td>
+                    <td class="text-center" colspan="4">Aucun club</td>
                 </tr>
             {% endif %}
             </tbody>

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from books.models import Book, Overdue
 from libraries.models import Library, Bookseller
-from clubs.models import Club, Session, Member
+from clubs.models import Club, Session, Member, Participant
 from books.models import Book, Author, Collection, Editor, Overdue, Category, Library, Overdue
 from books.forms import AddBookForm
 from clubs.forms import AddClubForm, AddSessionForm
@@ -185,6 +185,17 @@ def my_clubs(request):
     }
     return render(request, 'my_library/clubs.html', context)
 
+def show_club(request, club_id):
+    club = Club.objects.get(id=club_id)
+    members = Member.objects.filter(club=club)
+    sessions = Session.objects.filter(club=club)
+    context = {
+        'club': club,
+        'members': members,
+        'sessions': sessions
+    }
+    return render(request, 'my_library/show_club.html', context)
+
 def add_club(request):
     form = AddClubForm()
     bookseller = Bookseller.objects.get(user=request.user.id)
@@ -217,3 +228,36 @@ def add_club(request):
         'form': form
     }
     return render(request, 'my_library/add_club.html', context)
+
+def show_session(request, session_id):
+    session = Session.objects.get(id=session_id)
+    participants = Participant.objects.filter(session=session)
+    context = {
+        'session': session,
+        'participants': participants
+    }
+    return render(request, 'my_library/show_session.html', context)
+
+def add_session(request, club_id):
+    club = Club.objects.get(id=club_id)
+    form = AddSessionForm()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('members:user_clubs')
+        else:
+            form = AddSessionForm()
+
+        date = request.POST['date']
+        session = Session(date=date, club=club)
+        session.save()
+        return redirect('members:user_clubs')
+    context = {
+        'form': form
+    }
+    return render(request, 'my_library/add_session.html', context)
+
+def delete_session(request, session_id):
+    session = Session.objects.get(id=session_id)
+    session.delete()
+    return redirect('members:user_clubs')

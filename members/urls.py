@@ -33,5 +33,10 @@ urlpatterns = [
     path('add_book/', views.add_book, name='add_book'),
 
     path('my_clubs/', views.my_clubs, name='user_clubs'),
+    path('my_clubs/<int:club_id>', views.show_club, name='show_club'),
     path('my_clubs/add', views.add_club, name='add_club'),
+
+    path('my_sessions/<int:session_id>', views.show_session, name='show_session'),
+    path('my_sessions/<int:club_id>/add', views.add_session, name='add_session'),
+    path('my_sessions/<int:session_id>/delete', views.delete_session, name='delete_session')
 ]
