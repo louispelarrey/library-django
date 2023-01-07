@@ -27,12 +27,13 @@ urlpatterns = [
     path('my_books/', views.my_books, name='user_books'),
     path('my_books/<str:reference>/add', views.add_overdue, name='add_overdue'),
     path('my_books/<str:reference>/giveback', views.edit_overdue, name='edit_overdue'),
+    path('my_clubs/', views.my_clubs, name='user_clubs'),
     path('clubs/join/<int:club_id>', views.join_club, name='join_club'),
+    path('clubs/leave/<int:club_id>', views.leave_club, name='leave_club'),
 
     path('my_library/', views.my_library, name='user_library'),
     path('add_book/', views.add_book, name='add_book'),
 
-    path('my_clubs/', views.my_clubs, name='user_clubs'),
     path('my_clubs/<int:club_id>', views.show_club, name='show_club'),
     path('my_clubs/add', views.add_club, name='add_club'),
 

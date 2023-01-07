@@ -33,7 +33,7 @@
                     <td>{{ overdue.book.created_at }}</td>
                     {% if user.is_authenticated %}
                         {% if overdue.status == 'Disponible' %}
-                            <td><a class="btn btn-secondary" href="{% url 'libraries:edit_overdue' overdue.id %}">Emprunter</a></td>
+                            <td><a class="btn btn-secondary" href="{% url 'members:add_overdue' overdue.reference %}">Emprunter</a></td>
                         {% else %}
                             <td>Emprunté par {{ overdue.user.username }}</td>
                         {% endif %}

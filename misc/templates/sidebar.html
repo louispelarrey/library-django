@@ -16,9 +16,6 @@
                 <a class="nav-link" href="{% url 'members:user_library' %}">Mes livres</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'members:user_clubs' %}">Mes clubs</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{% url 'books:categories' %}">Catégories</a>
             </li>
             <li class="nav-item">
@@ -46,7 +43,7 @@
                 <a class="nav-link" href="{% url 'members:user_books' %}">Mes livres</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Mes groupes de lectures</a>
+                <a class="nav-link" href="{% url 'members:user_clubs' %}">Mes groupes de lectures</a>
             </li>
         </ul>
     </div>

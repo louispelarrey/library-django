@@ -52,6 +52,7 @@ def dashboard(request):
             library = Library.objects.get(id=bookseller.library.id)
             overdues = Overdue.objects.filter(library=library)
             overdues_late = overdues.filter(due_date__lt=timezone.now())
+            clubs = Club.objects.filter(library=library)
             books = []
             for overdue in overdues:
                 books.append(overdue.book)
@@ -59,7 +60,8 @@ def dashboard(request):
                 'library': library,
                 'books': books,
                 'overdues': overdues,
-                'overdues_late': overdues_late
+                'overdues_late': overdues_late,
+                'clubs': clubs
             }
             return render(request, 'dashboard/bookseller.html', context)
         else:
@@ -68,9 +70,6 @@ def dashboard(request):
         return redirect('members:login')
 
 ######################################### USERS #########################################
-
-def bookseller_dashboard(request):
-    return render(request, 'dashboard/bookseller.html')
 
 def my_books(request):
     overdues = Overdue.objects.filter(user=request.user)
@@ -99,10 +98,29 @@ def edit_overdue(request, reference):
     overdue.save()
     return redirect('members:user_books')
 
-def join_club(request, id):
-    club = Club.objects.get(id=id)
+def my_clubs(request):
+    members = Member.objects.filter(user=request.user)
+    clubs = []
+    for member in members:
+        clubs.append(member.club)
+        
+    sessions = Session.objects.filter(club__in=clubs)
+    context = {
+        'clubs': clubs,
+        'sessions': sessions
+    }
+    return render(request, 'my_club/index.html', context)
+
+def join_club(request, club_id):
+    club = Club.objects.get(id=club_id)
     member = Member(club=club, user=request.user)
     member.save()
+    return redirect('clubs:clubs')
+
+def leave_club(request, club_id):
+    club = Club.objects.get(id=club_id)
+    member = Member.objects.get(club=club, user=request.user)
+    member.delete()
     return redirect('clubs:clubs')
 
 ######################################### BOOKSELLER #########################################
@@ -111,13 +129,15 @@ def my_library(request):
     bookseller = Bookseller.objects.get(user=request.user)
     library = Library.objects.get(id=bookseller.library.id)
     overdues = Overdue.objects.filter(library=library)
+    clubs = Club.objects.filter(library=library)
     books = []
     for overdue in overdues:
         book = Book.objects.get(id=overdue.book.id)
         books.append(book)
 
     context = {
-        'books': books
+        'books': books,
+        'clubs': clubs,
     }
     return render(request, 'my_library/index.html', context)
 
@@ -175,16 +195,6 @@ def add_book(request):
     }
     return render(request, 'my_library/add_book.html', context)
 
-def my_clubs(request):
-    user = request.user
-    bookseller = Bookseller.objects.get(user=user)
-    library = Library.objects.get(bookseller=bookseller)
-    clubs = Club.objects.filter(library=library)
-    context = {
-        'clubs': clubs
-    }
-    return render(request, 'my_library/clubs.html', context)
-
 def show_club(request, club_id):
     club = Club.objects.get(id=club_id)
     members = Member.objects.filter(club=club)
@@ -204,7 +214,7 @@ def add_club(request):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return redirect('members:user_clubs')
+            return redirect('members:user_library')
         else:
             form = AddClubForm()
 
@@ -216,7 +226,7 @@ def add_club(request):
 
         club = Club(name=name, description=description, capacity=capacity, library=library, book=books)
         club.save()
-        return redirect('members:user_clubs')
+        return redirect('members:user_library')
 
     overdues = Overdue.objects.filter(library=library)
     books = []
@@ -244,14 +254,14 @@ def add_session(request, club_id):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return redirect('members:user_clubs')
+            return redirect('members:user_library')
         else:
             form = AddSessionForm()
 
         date = request.POST['date']
         session = Session(date=date, club=club)
         session.save()
-        return redirect('members:user_clubs')
+        return redirect('members:user_library')
     context = {
         'form': form
     }
@@ -260,4 +270,4 @@ def add_session(request, club_id):
 def delete_session(request, session_id):
     session = Session.objects.get(id=session_id)
     session.delete()
-    return redirect('members:user_clubs')
+    return redirect('members:user_library')

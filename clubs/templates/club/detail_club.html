@@ -6,6 +6,11 @@
     </head>
     <body>
         <h1>Fiche du club</h1>
+        {% if is_member %}
+            <a class="btn btn-secondary" href="{% url 'members:leave_club' club.id %}">Quitter le club</a>
+        {% else %}
+            <a class="btn btn-secondary" href="{% url 'members:join_club' club.id %}">Rejoindre le club</a>
+        {% endif %}
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title">{{ club.name }}</h2>
@@ -21,27 +26,23 @@
             <div class="row">
                 <div class="col-6">
                     <h3>Liste des membres</h3>
+                    <ul class="list-group">
+                        {% for member in members %}
+                            <li class="list-group-item">
+                                {{ member.user.username }}
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 <div class="col-6">
                     <h3>Liste des sessions</h3>
-                    <div id="accordion">
-                        {% for session in club.sessions %}
-                        <div class="card">
-                            <div class="card-header" id="heading-{{ session.id }}">
-                                <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{ session.id }}" aria-expanded="true" aria-controls="collapse-{{ session.id }}">
-                                    Collapsible Group Item #1
-                                </button>
-                                </h5>
-                            </div>
-                            <div id="collapse-{{ session.id }}" class="collapse" aria-labelledby="heading-{{ session.id }}" data-parent="#accordion">
-                                <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                </div>
-                            </div>
-                        </div>
+                    <ul class="list-group">
+                        {% for session in sessions %}
+                            <li class="list-group-item">
+                                <a href="">{{ session.date }}</a>
+                            </li>
                         {% endfor %}
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>

@@ -27,11 +27,6 @@
                     <td>{{ club.book.title }}</td>
                     <td>
                         <a class="btn btn-secondary" href="{% url 'clubs:detail_club' club.id %}">Voir</a>
-                        {% if user.is_authenticated %}
-                            {% if user.is_staff == "false" %}
-                                <a href="{% url 'members:join_club' club.id %}">Rejoindre</a>
-                            {% endif %}
-                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
