@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Library
 from books.models import Overdue
+from clubs.models import Club
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -21,8 +22,10 @@ def library_index(request):
 def library_detail(request, slug):
     library = Library.objects.get(slug=slug)
     overdues = Overdue.objects.filter(library=library)
+    clubs = Club.objects.filter(library=library)
     context = {
         'library': library,
         'overdues': overdues,
+        'clubs': clubs
     }
     return render(request, 'library/detail.html', context)
