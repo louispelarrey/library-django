@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'misc',
     'djgeojson',
     'leaflet',
+    'clubs',
 ]
 
 MIDDLEWARE = [

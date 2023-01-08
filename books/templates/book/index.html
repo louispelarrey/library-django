@@ -24,8 +24,10 @@
                     <td>{{ overdue.book.created_at }}</td>
                     <td><a class="btn btn-secondary" href="{% url 'books:detail_book' overdue.book.id %}">Voir</a></td>
                     {% if user.is_authenticated %}
-                        {% if overdue.status == "Disponible" %}
-                            <td><a class="btn btn-secondary" href="{% url 'members:add_overdue' overdue.reference %}">Emprunter</a></td>
+                        {% if user.is_staff == "false" %}
+                            {% if overdue.status == "Disponible"%}
+                                <td><a class="btn btn-secondary" href="{% url 'members:add_overdue' overdue.reference %}">Emprunter</a></td>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 </tr>

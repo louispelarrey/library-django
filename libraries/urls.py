@@ -31,5 +31,4 @@ urlpatterns = [
 
     path('libraries/<str:slug>', views.library_detail, name='library_detail'),
 
-    path('libraries/<int:id>/edit_overdue', login_required(views.edit_overdue), name='edit_overdue'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

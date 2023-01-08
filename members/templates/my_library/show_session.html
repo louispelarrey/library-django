@@ -1,0 +1,22 @@
+{% include "menu.html" %}
+{% load i18n %}
+<html>
+    <head>
+        <title>Session</title>
+    </head>
+    <body>
+        <h1>Fiche de la session</h1>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">{{ session.date }}</h2>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for participant in participants %}
+                    <li class="list-group-item">{{ participant.user.username }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

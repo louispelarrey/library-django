@@ -5,8 +5,10 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from books.models import Book, Overdue
 from libraries.models import Library, Bookseller
+from clubs.models import Club, Session, Member, Participant
 from books.models import Book, Author, Collection, Editor, Overdue, Category, Library, Overdue
-from books.forms import AddBookForm, AddAuthorForm, AddCategoryForm, AddCollectionForm, AddEditorForm
+from books.forms import AddBookForm
+from clubs.forms import AddClubForm, AddSessionForm
 import datetime, random
 from django.utils import timezone
 
@@ -43,6 +45,33 @@ def register_user(request):
     context = {}
     return render(request, 'authenticate/register.html', context)
 
+def dashboard(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            bookseller = Bookseller.objects.get(user=request.user)
+            library = Library.objects.get(id=bookseller.library.id)
+            overdues = Overdue.objects.filter(library=library)
+            overdues_late = overdues.filter(due_date__lt=timezone.now())
+            clubs = Club.objects.filter(library=library)
+            books = []
+            for overdue in overdues:
+                books.append(overdue.book)
+            context = {
+                'library': library,
+                'books': books,
+                'overdues': overdues,
+                'overdues_late': overdues_late,
+                'clubs': clubs
+            }
+            return render(request, 'dashboard/bookseller.html', context)
+        else:
+            # CONTEXT FOR CALENDAR
+            return render(request, 'dashboard/user.html')
+    else:
+        return redirect('members:login')
+
+######################################### USERS #########################################
+
 def my_books(request):
     overdues = Overdue.objects.filter(user=request.user)
     overdues_late = overdues.filter(due_date__lt=timezone.now())
@@ -54,18 +83,64 @@ def my_books(request):
 
     return render(request, 'my_book/index.html', context)
 
+def add_overdue(request, reference):
+    overdue = Overdue.objects.get(reference=reference)
+    overdue.loan_date = datetime.datetime.now()
+    overdue.due_date = datetime.datetime.now() + datetime.timedelta(days=7)
+    overdue.status = 'Indisponible'
+    overdue.user = User.objects.get(id=request.user.id)
+    overdue.save()
+    return redirect('books:books')
+    
+def edit_overdue(request, reference):
+    overdue = Overdue.objects.get(reference=reference)
+    overdue.status = 'Disponible'
+    overdue.user = None
+    overdue.save()
+    return redirect('members:user_books')
+
+def my_clubs(request):
+    members = Member.objects.filter(user=request.user)
+    clubs = []
+    for member in members:
+        clubs.append(member.club)
+        
+    sessions = Session.objects.filter(club__in=clubs)
+    context = {
+        'clubs': clubs,
+        'sessions': sessions
+    }
+    return render(request, 'my_club/index.html', context)
+
+def join_club(request, club_id):
+    club = Club.objects.get(id=club_id)
+    member = Member(club=club, user=request.user)
+    if club.capacity == (club.members.count()):
+        messages.error(request, 'La capacité du club est atteinte')
+    member.save()
+    return redirect('clubs:clubs')
+
+def leave_club(request, club_id):
+    club = Club.objects.get(id=club_id)
+    member = Member.objects.get(club=club, user=request.user)
+    member.delete()
+    return redirect('clubs:clubs')
+
+######################################### BOOKSELLER #########################################
+
 def my_library(request):
     bookseller = Bookseller.objects.get(user=request.user)
     library = Library.objects.get(id=bookseller.library.id)
     overdues = Overdue.objects.filter(library=library)
+    clubs = Club.objects.filter(library=library)
     books = []
     for overdue in overdues:
         book = Book.objects.get(id=overdue.book.id)
         books.append(book)
 
     context = {
-        'library': library,
-        'books': books
+        'books': books,
+        'clubs': clubs,
     }
     return render(request, 'my_library/index.html', context)
 
@@ -123,18 +198,79 @@ def add_book(request):
     }
     return render(request, 'my_library/add_book.html', context)
 
-def add_overdue(request, reference):
-    overdue = Overdue.objects.get(reference=reference)
-    overdue.loan_date = datetime.datetime.now()
-    overdue.due_date = datetime.datetime.now() + datetime.timedelta(days=7)
-    overdue.status = 'Indisponible'
-    overdue.user = User.objects.get(id=request.user.id)
-    overdue.save()
-    return redirect('books:books')
-    
-def edit_overdue(request, reference):
-    overdue = Overdue.objects.get(reference=reference)
-    overdue.status = 'Disponible'
-    overdue.user = None
-    overdue.save()
-    return redirect('members:user_books')
+def show_club(request, club_id):
+    club = Club.objects.get(id=club_id)
+    members = Member.objects.filter(club=club)
+    sessions = Session.objects.filter(club=club)
+    context = {
+        'club': club,
+        'members': members,
+        'sessions': sessions
+    }
+    return render(request, 'my_library/show_club.html', context)
+
+def add_club(request):
+    form = AddClubForm()
+    bookseller = Bookseller.objects.get(user=request.user.id)
+    library = Library.objects.get(id=bookseller.library.id)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('members:user_library')
+        else:
+            form = AddClubForm()
+
+        name = request.POST['name']
+        description = request.POST['description']
+        capacity = request.POST['capacity']
+
+        books = Book.objects.get(id=request.POST['book'])
+
+        club = Club(name=name, description=description, capacity=capacity, library=library, book=books)
+        club.save()
+        return redirect('members:user_library')
+
+    overdues = Overdue.objects.filter(library=library)
+    books = []
+    for overdue in overdues:
+        book = Book.objects.get(id=overdue.book.id)
+        books.append(book)
+    context = {
+        'books': books,
+        'form': form
+    }
+    return render(request, 'my_library/add_club.html', context)
+
+def show_session(request, session_id):
+    session = Session.objects.get(id=session_id)
+    participants = Participant.objects.filter(session=session)
+    context = {
+        'session': session,
+        'participants': participants
+    }
+    return render(request, 'my_library/show_session.html', context)
+
+def add_session(request, club_id):
+    club = Club.objects.get(id=club_id)
+    form = AddSessionForm()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('members:user_library')
+        else:
+            form = AddSessionForm()
+
+        date = request.POST['date']
+        session = Session(date=date, club=club)
+        session.save()
+        return redirect('members:user_library')
+    context = {
+        'form': form
+    }
+    return render(request, 'my_library/add_session.html', context)
+
+def delete_session(request, session_id):
+    session = Session.objects.get(id=session_id)
+    session.delete()
+    return redirect('members:user_library')
