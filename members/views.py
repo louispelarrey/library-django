@@ -65,6 +65,7 @@ def dashboard(request):
             }
             return render(request, 'dashboard/bookseller.html', context)
         else:
+            # CONTEXT FOR CALENDAR
             return render(request, 'dashboard/user.html')
     else:
         return redirect('members:login')
@@ -114,6 +115,8 @@ def my_clubs(request):
 def join_club(request, club_id):
     club = Club.objects.get(id=club_id)
     member = Member(club=club, user=request.user)
+    if club.capacity == (club.members.count()):
+        messages.error(request, 'La capacité du club est atteinte')
     member.save()
     return redirect('clubs:clubs')
 
