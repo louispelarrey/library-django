@@ -6,10 +6,12 @@
     </head>
     <body>
         <h1>Fiche du club</h1>
-        {% if is_member %}
-            <a class="btn btn-secondary" href="{% url 'members:leave_club' club.id %}">Quitter le club</a>
-        {% else %}
-            <a class="btn btn-secondary" href="{% url 'members:join_club' club.id %}">Rejoindre le club</a>
+        {% if user.is_authenticated %}
+            {% if is_member %}
+                <a class="btn btn-secondary" href="{% url 'members:leave_club' club.id %}">Quitter le club</a>
+            {% else %}
+                <a class="btn btn-secondary" href="{% url 'members:join_club' club.id %}">Rejoindre le club</a>
+            {% endif %}
         {% endif %}
         <div class="card">
             <div class="card-header">
@@ -17,7 +19,7 @@
             </div>
             <div class="card-body">
                 <h3>Créé le {% language 'fr' %} {{ club.created_at|date:"d F Y" }} {% endlanguage %}</h3>
-                <h3>Nombre de membres : {{ club.members|length }}/{{ club.capacity }}</h3>
+                <h3>Nombre de membres : {{ club.members_count }}/{{ club.capacity }}</h3>
                 <h3>Livre : {{ club.book.title }}</h3>
                 <p class="card-text">{{ club.description }}</p>
             </div>
@@ -39,7 +41,16 @@
                     <ul class="list-group">
                         {% for session in sessions %}
                             <li class="list-group-item">
-                                <a href="">{{ session.date }}</a>
+                                {{ session.date }}
+                                {% if user.is_authenticated %}
+                                    {% if is_member %}
+                                        {% if session.is_participant %}
+                                            <a class="btn btn-secondary" href="{% url 'members:leave_session' session.id %}">Ne plus participer</a>
+                                        {% else %}
+                                            <a class="btn btn-secondary" href="{% url 'members:join_session' session.id %}">Participer</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
                             </li>
                         {% endfor %}
                     </ul>

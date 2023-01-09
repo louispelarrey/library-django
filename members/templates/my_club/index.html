@@ -23,7 +23,7 @@
                         <tr>
                             <td>{{ club.name }}</td>
                             <td>{{ club.description }}</td>
-                            <td>{{ club.members|length }}/{{ club.capacity }}</td>
+                            <td>{{ club.members_count }}/{{ club.capacity }}</td>
                             <td><a href="{% url 'libraries:library_detail' club.library.slug %}">{{ club.library.name }}</a></td>
                             <td><a href="{% url 'books:detail_book' club.book.id %}">{{ club.book.title }}</a></td>
                             <td><a class="btn btn-secondary" href="{% url 'clubs:detail_club' club.id %}">Voir</a></td>
@@ -33,7 +33,7 @@
                 </table>
             </div>
             <div class="col-3">
-                <h1>Liste des sessions</h1>
+                <h1>Toutes les sessions</h1>
                 <table class="table table-dark table-hover">
                     <thead>
                         <tr>
@@ -46,6 +46,7 @@
                         <tr>
                             <td>{{ session.club.name }}</td>
                             <td>{{ session.date }}</td>
+                            <td><a class="btn btn-secondary" href="{% url 'members:leave_session' session.id %}">Ne plus participer</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

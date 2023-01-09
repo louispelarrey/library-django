@@ -105,7 +105,14 @@ def my_clubs(request):
     for member in members:
         clubs.append(member.club)
         
-    sessions = Session.objects.filter(club__in=clubs)
+    for club in clubs:
+        club.members_count = Member.objects.filter(club=club).count()
+
+    participants = Participant.objects.filter(user=request.user)
+    sessions = []
+    for participant in participants:
+        sessions.append(participant.session)
+
     context = {
         'clubs': clubs,
         'sessions': sessions
@@ -115,16 +122,33 @@ def my_clubs(request):
 def join_club(request, club_id):
     club = Club.objects.get(id=club_id)
     member = Member(club=club, user=request.user)
-    if club.capacity == (club.members.count()):
-        messages.error(request, 'La capacité du club est atteinte')
     member.save()
-    return redirect('clubs:clubs')
+    return redirect('members:user_clubs')
 
 def leave_club(request, club_id):
     club = Club.objects.get(id=club_id)
     member = Member.objects.get(club=club, user=request.user)
     member.delete()
-    return redirect('clubs:clubs')
+    sessions = Session.objects.filter(club=club)
+    for session in sessions:
+        try:
+            participant = Participant.objects.get(session=session, user=request.user)
+            participant.delete()
+        except:
+            pass
+    return redirect('members:user_clubs')
+
+def join_session(request, session_id):
+    session = Session.objects.get(id=session_id)
+    participant = Participant(session=session, user=request.user)
+    participant.save()
+    return redirect('members:user_clubs')
+
+def leave_session(request, session_id):
+    session = Session.objects.get(id=session_id)
+    participant = Participant.objects.get(session=session, user=request.user)
+    participant.delete()
+    return redirect('members:user_clubs')
 
 ######################################### BOOKSELLER #########################################
 

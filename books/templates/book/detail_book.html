@@ -11,7 +11,7 @@
             <h2>{{ book.title }}</h2>
             </div>
             <div class="card-body">
-                <h3>Écrit par {{ book.author }}, {% language 'fr' %} {{ book.created_at|date:"d F Y" }} {% endlanguage %} )</h3>
+                <h3>Écrit par {{ book.author }}, {% language 'fr' %} {{ book.created_at|date:"d F Y" }} {% endlanguage %}</h3>
                 <p class="card-text">{{ book.description }}</p>
             </div>
         </div>
@@ -22,7 +22,8 @@
             <thead>
                 <tr>
                     <th scope="col">Nom</th>
-                    <th scope="col">Adresse</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Arrondissement</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -30,7 +31,10 @@
                 {% for library in libraries %}
                 <tr>
                     <td>{{ library.name }}</td>
-                    <td>{{ library.address }}, {{ library.postal_code }}, {{ library.city }}</td>
+                    <td>{{ library.description }}</td>
+                    <td>{{ library.arr }}</td>
+                    
+                    <td></td>
                     {% if user.is_authenticated %}
                         <td><a class="btn btn-secondary" href="{% url 'libraries:library_detail' library.slug %}">Voir</a></td>
                     {% endif %}
