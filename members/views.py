@@ -53,6 +53,8 @@ def dashboard(request):
             overdues = Overdue.objects.filter(library=library)
             overdues_late = overdues.filter(due_date__lt=timezone.now())
             clubs = Club.objects.filter(library=library)
+            for club in clubs:
+                club.members_count = Member.objects.filter(club=club).count()
             books = []
             for overdue in overdues:
                 books.append(overdue.book)
@@ -157,6 +159,8 @@ def my_library(request):
     library = Library.objects.get(id=bookseller.library.id)
     overdues = Overdue.objects.filter(library=library)
     clubs = Club.objects.filter(library=library)
+    for club in clubs:
+        club.members_count = Member.objects.filter(club=club).count()
     books = []
     for overdue in overdues:
         book = Book.objects.get(id=overdue.book.id)
@@ -224,6 +228,7 @@ def add_book(request):
 
 def show_club(request, club_id):
     club = Club.objects.get(id=club_id)
+    club.members_count = Member.objects.filter(club=club).count()
     members = Member.objects.filter(club=club)
     sessions = Session.objects.filter(club=club)
     context = {
@@ -266,6 +271,11 @@ def add_club(request):
     }
     return render(request, 'my_library/add_club.html', context)
 
+def delete_member(request, member_id):
+    member = Member.objects.get(id=member_id)
+    member.delete()
+    return redirect('members:user_clubs')
+
 def show_session(request, session_id):
     session = Session.objects.get(id=session_id)
     participants = Participant.objects.filter(session=session)
@@ -297,4 +307,9 @@ def add_session(request, club_id):
 def delete_session(request, session_id):
     session = Session.objects.get(id=session_id)
     session.delete()
+    return redirect('members:user_library')
+
+def delete_participant(request, participant_id):
+    participant = Participant.objects.get(id=participant_id)
+    participant.delete()
     return redirect('members:user_library')

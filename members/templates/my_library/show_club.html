@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <h3>Créé le {% language 'fr' %} {{ club.created_at|date:"d F Y" }} {% endlanguage %}</h3>
-                <h3>Nombre de membres : {{ club.members|length }}/{{ club.capacity }}</h3>
+                <h3>Nombre de membres : {{ club.members_count }}/{{ club.capacity }}</h3>
                 <h3>Livre : {{ club.book.title }}</h3>
                 <p class="card-text">{{ club.description }}</p>
             </div>
@@ -37,7 +37,7 @@
                             <td>{{ member.user.email }}</td>
                             <td>{{ member.created_at }}</td>
                             <td>
-                                <a class="btn btn-danger" href="">Supprimer</a>
+                                <a class="btn btn-danger" href="{% url 'members:delete_member' member.id %}">Supprimer</a>
                             </td>
                         </tr>
                         {% endfor %}
