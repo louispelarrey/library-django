@@ -4,38 +4,40 @@
         <title>Club</title>
     </head>
     <body>
-        <h1>Liste des clubs</h1>
-        <table class="table table-dark table-hover">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Capacité</th>
-                    <th>Librairie</th>
-                    <th>Livre</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            {% if clubs|length > 0 %}
-                {% for club in clubs %}
-                <tr>
-                    <td>{{ club.name }}</td>
-                    <td>{{ club.description }}</td>
-                    <td>{{ club.members_count }}/{{ club.capacity }}</td>
-                    <td>{{ club.library.name }}</td>
-                    <td>{{ club.book.title }}</td>
-                    <td>
-                        <a class="btn btn-secondary" href="{% url 'clubs:detail_club' club.id %}">Voir</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td class="text-center" colspan="4">Aucun club</td>
-                </tr>
-            {% endif %}
-            </tbody>
-        </table>
+        <div class="container-fluid">
+            <h1 class="font-weight-bold mb-3">Liste des clubs</h1>
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Capacité</th>
+                        <th>Librairie</th>
+                        <th>Livre</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if clubs|length > 0 %}
+                    {% for club in clubs %}
+                    <tr>
+                        <td>{{ club.name }}</td>
+                        <td>{{ club.description }}</td>
+                        <td>{{ club.members_count }}/{{ club.capacity }}</td>
+                        <td>{{ club.library.name }}</td>
+                        <td>{{ club.book.title }}</td>
+                        <td>
+                            <a class="btn btn-secondary" href="{% url 'clubs:detail_club' club.id %}">Voir</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td class="text-center" colspan="4">Aucun club</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>

@@ -4,32 +4,38 @@
         <title>Mes livres</title>
     </head>
     <body>
-        <div class="row">
-            <div class="col-9">
-                <h1>Liste de mes livres</h1>
-                <table class="table table-dark table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Auteur</th>
-                            <th scope="col">Date rendu</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for overdue in overdues %}
-                        <tr>
-                            <td>{{ overdue.book.title }}</td>
-                            <td>{{ overdue.book.description }}</td>
-                            <td>{{ overdue.book.author }}</td>
-                            <td>{{ overdue.due_date }}</td>
-                            <td><a class="btn btn-secondary" href="{% url 'books:detail_book' overdue.book.id %}">Voir</a></td>
-                            <td><a class="btn btn-secondary" href="{% url 'members:edit_overdue' overdue.reference %}">Rendre</a></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="card col-12 p-3">
+                    <h1 class="font-weight-bold mb-3">Liste de mes livres</h1>
+                    <table class="table table-striped table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Auteur</th>
+                                <th scope="col">Date rendu</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for overdue in overdues %}
+                            <tr>
+                                <td>{{ overdue.book.title }}</td>
+                                <td>{{ overdue.book.description }}</td>
+                                <td>{{ overdue.book.author }}</td>
+                                <td>{{ overdue.due_date }}</td>
+                                <td><a class="btn btn-secondary" href="{% url 'books:detail_book' overdue.book.id %}">Voir</a></td>
+                                <td><a class="btn btn-secondary" href="{% url 'members:edit_overdue' overdue.reference %}">Rendre</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card col-7 p-3">
+                    <h1>Calendrier des sessions et dates rendues</h1>
+                    <div id="calendar"></div>
+                </div>
             </div>
         </div>
     </body>

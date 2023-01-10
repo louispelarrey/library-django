@@ -1,61 +1,69 @@
 {% include "menu.html" %}
 {% load i18n %}
+{% language 'fr' %} 
 <html>
     <head>
         <title>Club</title>
     </head>
     <body>
-        <h1>Fiche du club</h1>
-        {% if user.is_authenticated %}
-            {% if is_member %}
-                <a class="btn btn-secondary" href="{% url 'members:leave_club' club.id %}">Quitter le club</a>
-            {% else %}
-                <a class="btn btn-secondary" href="{% url 'members:join_club' club.id %}">Rejoindre le club</a>
-            {% endif %}
-        {% endif %}
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">{{ club.name }}</h2>
-            </div>
-            <div class="card-body">
-                <h3>Créé le {% language 'fr' %} {{ club.created_at|date:"d F Y" }} {% endlanguage %}</h3>
-                <h3>Nombre de membres : {{ club.members_count }}/{{ club.capacity }}</h3>
-                <h3>Livre : {{ club.book.title }}</h3>
-                <p class="card-text">{{ club.description }}</p>
-            </div>
-        </div>
         <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <h3>Liste des membres</h3>
-                    <ul class="list-group">
-                        {% for member in members %}
-                            <li class="list-group-item">
-                                {{ member.user.username }}
-                            </li>
-                        {% endfor %}
-                    </ul>
+            <h1 class="font-weight-bold mb-3">Fiche du club</h1>
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">
+                    <h2 class="card-title">{{ club.name }}</h2>
+                    {% if user.is_authenticated %}
+                        {% if is_member %}
+                        <div class="text-right">
+                            <a class="btn btn-danger" href="{% url 'members:leave_club' club.id %}">Quitter le club</a>
+                        </div>
+                        {% else %}
+                        <div class="text-right">
+                            <a class="btn btn-secondary text-right" href="{% url 'members:join_club' club.id %}">Rejoindre le club</a>
+                        </div>
+                        {% endif %}
+                    {% endif %}
                 </div>
-                <div class="col-6">
-                    <h3>Liste des sessions</h3>
-                    <ul class="list-group">
-                        {% for session in sessions %}
-                            <li class="list-group-item">
-                                {{ session.date }}
-                                {% if user.is_authenticated %}
-                                    {% if is_member %}
-                                        {% if session.is_participant %}
-                                            <a class="btn btn-secondary" href="{% url 'members:leave_session' session.id %}">Ne plus participer</a>
-                                        {% else %}
-                                            <a class="btn btn-secondary" href="{% url 'members:join_session' session.id %}">Participer</a>
+                <div class="card-body">
+                    <p>Créé le {{ club.created_at|date:"d F Y" }}</p>
+                    <p>Nombre de membres : {{ club.members_count }}/{{ club.capacity }}</p>
+                    <p>Livre : {{ club.book.title }}</p>
+                    <p class="card-text">{{ club.description }}</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 card p-3">
+                        <h3>Membres du club</h3>
+                        <ul class="list-group">
+                            {% for member in members %}
+                                <li class="list-group-item">
+                                    {{ member.user.username }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-6 card p-3">
+                        <h3>Sessions de lectures</h3>
+                        <ul class="list-group">
+                            {% for session in sessions %}
+                                <li class="list-group-item">
+                                    {{ session.date|date:"d F Y" }}
+                                    {% if user.is_authenticated %}
+                                        {% if is_member %}
+                                            {% if session.is_participant %}
+                                                <a class="btn btn-danger float-right" href="{% url 'members:leave_session' session.id %}">Ne plus participer</a>
+                                            {% else %}
+                                                <a class="btn btn-secondary float-right" href="{% url 'members:join_session' session.id %}">Participer</a>
+                                            {% endif %}
                                         {% endif %}
                                     {% endif %}
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </body>
 </html>
+{% endlanguage %}
