@@ -9,7 +9,7 @@ from clubs.models import Club, Session, Member, Participant
 from books.models import Book, Author, Collection, Editor, Overdue, Category, Library, Overdue
 from books.forms import AddBookForm
 from clubs.forms import AddClubForm, AddSessionForm
-import datetime, random
+import datetime, random, json
 from django.utils import timezone
 
 def login_user(request):
@@ -77,10 +77,33 @@ def dashboard(request):
 def my_books(request):
     overdues = Overdue.objects.filter(user=request.user)
     overdues_late = overdues.filter(due_date__lt=timezone.now())
-
+    overdues_in_calendar = []
+    for overdue in overdues:
+        date = overdue.due_date
+        overdues_in_calendar.append({
+            'title': overdue.book.title,
+            'start': date.isoformat(),
+            'end': date.isoformat(),
+        })
+    members = Member.objects.filter(user=request.user)
+    clubs = []
+    for member in members:
+        clubs.append(member.club)
+        
+    sessions = Session.objects.filter(club__in=clubs)
+    sessions_in_calendar = []
+    for session in sessions:
+        end = session.date + datetime.timedelta(hours=1)
+        sessions_in_calendar.append({
+            'title': session.club.name,
+            'start': session.date.isoformat(),
+            'end': end.isoformat(),
+        })
     context = {
         'overdues': overdues,
-        'overdues_late': overdues_late
+        'overdues_late': overdues_late,
+        'overdues_in_calendar': json.dumps(overdues_in_calendar),
+        'sessions_in_calendar': json.dumps(sessions_in_calendar)
     }
 
     return render(request, 'my_book/index.html', context)
