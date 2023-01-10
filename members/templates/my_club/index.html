@@ -4,53 +4,60 @@
         <title>Mes clubs</title>
     </head>
     <body>
-        <div class="row">
-            <div class="col-9">
-                <h1>Liste de mes clubs</h1>
-                <table class="table table-dark table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Membres</th>
-                            <th scope="col">Librairie</th>
-                            <th scope="col">Livre</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for club in clubs %}
-                        <tr>
-                            <td>{{ club.name }}</td>
-                            <td>{{ club.description }}</td>
-                            <td>{{ club.members_count }}/{{ club.capacity }}</td>
-                            <td><a href="{% url 'libraries:library_detail' club.library.slug %}">{{ club.library.name }}</a></td>
-                            <td><a href="{% url 'books:detail_book' club.book.id %}">{{ club.book.title }}</a></td>
-                            <td><a class="btn btn-secondary" href="{% url 'clubs:detail_club' club.id %}">Voir</a></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-3">
-                <h1>Toutes les sessions</h1>
-                <table class="table table-dark table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Club</th>
-                            <th scope="col">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for session in sessions %}
-                        <tr>
-                            <td>{{ session.club.name }}</td>
-                            <td>{{ session.date }}</td>
-                            <td><a class="btn btn-secondary" href="{% url 'members:leave_session' session.id %}">Ne plus participer</a></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="card col-9 p-3">
+                    <h1 class="font-weight-bold mb-3">Liste de mes clubs</h1>
+                    <table class="table table-striped table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Membres</th>
+                                <th scope="col">Librairie</th>
+                                <th scope="col">Livre</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for club in clubs %}
+                            <tr>
+                                <td>{{ club.name }}</td>
+                                <td>{{ club.description }}</td>
+                                <td>{{ club.members_count }}/{{ club.capacity }}</td>
+                                <td><a href="{% url 'libraries:library_detail' club.library.slug %}">{{ club.library.name }}</a></td>
+                                <td><a href="{% url 'books:detail_book' club.book.id %}">{{ club.book.title }}</a></td>
+                                <td><a class="btn btn-secondary" href="{% url 'clubs:detail_club' club.id %}">Voir</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card col-3 p-3">
+                    <h1 class="font-weight-bold mb-3">Sessions</h1>
+                    <table class="table table-striped table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Club</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if sessions|length == 0 %}
+                            <tr>
+                                <td colspan="2">Vous n'avez pas de sessions</td>
+                            </tr>
+                            {% endif %}
+                            {% for session in sessions %}
+                            <tr>
+                                <td>{{ session.club.name }}</td>
+                                <td>{{ session.date }}</td>
+                                <td><a class="btn btn-secondary" href="{% url 'members:leave_session' session.id %}">Ne plus participer</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </body>
