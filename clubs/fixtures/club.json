@@ -1,0 +1,30 @@
+[
+    {
+        "model": "clubs.club",
+        "pk": 1,
+        "fields": {
+            "name": "Club Manga Seinen",
+            "slug": "club-berserk",
+            "description": "Club de lecture afin de découvrir l'incroyable manga Berserk",
+            "capacity": 3,
+            "library": 1,
+            "book": 1,
+            "updated_at": "2023-01-10T12:59:16.233Z",
+            "created_at": "2023-01-10T12:59:16.233Z"
+        }
+    },
+    {
+        "model": "clubs.club",
+        "pk": 2,
+        "fields": {
+            "name": "Club LOTR",
+            "slug": "club-lotr",
+            "description": "Club de lecture afin de découvrir l'incroyable saga du Seigneur des Anneaux",
+            "capacity": 3,
+            "library": 1,
+            "book": 5,
+            "updated_at": "2023-01-10T12:59:16.233Z",
+            "created_at": "2023-01-10T12:59:16.233Z"
+        }
+    }
+]
