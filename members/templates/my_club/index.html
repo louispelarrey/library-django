@@ -32,25 +32,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-3">
-                <h1>Liste des sessions</h1>
-                <table class="table table-dark table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Club</th>
-                            <th scope="col">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for session in sessions %}
-                        <tr>
-                            <td>{{ session.club.name }}</td>
-                            <td>{{ session.date }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
         </div>
     </body>
 </html>
