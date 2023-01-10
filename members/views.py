@@ -9,7 +9,7 @@ from clubs.models import Club, Session, Member, Participant
 from books.models import Book, Author, Collection, Editor, Overdue, Category, Library, Overdue
 from books.forms import AddBookForm
 from clubs.forms import AddClubForm, AddSessionForm
-import datetime, random
+import datetime, random, json
 from django.utils import timezone
 
 def login_user(request):
@@ -53,6 +53,8 @@ def dashboard(request):
             overdues = Overdue.objects.filter(library=library)
             overdues_late = overdues.filter(due_date__lt=timezone.now())
             clubs = Club.objects.filter(library=library)
+            for club in clubs:
+                club.members_count = Member.objects.filter(club=club).count()
             books = []
             for overdue in overdues:
                 books.append(overdue.book)
@@ -75,10 +77,33 @@ def dashboard(request):
 def my_books(request):
     overdues = Overdue.objects.filter(user=request.user)
     overdues_late = overdues.filter(due_date__lt=timezone.now())
-
+    overdues_in_calendar = []
+    for overdue in overdues:
+        date = overdue.due_date
+        overdues_in_calendar.append({
+            'title': overdue.book.title,
+            'start': date.isoformat(),
+            'end': date.isoformat(),
+        })
+    members = Member.objects.filter(user=request.user)
+    clubs = []
+    for member in members:
+        clubs.append(member.club)
+        
+    sessions = Session.objects.filter(club__in=clubs)
+    sessions_in_calendar = []
+    for session in sessions:
+        end = session.date + datetime.timedelta(hours=1)
+        sessions_in_calendar.append({
+            'title': session.club.name,
+            'start': session.date.isoformat(),
+            'end': end.isoformat(),
+        })
     context = {
         'overdues': overdues,
-        'overdues_late': overdues_late
+        'overdues_late': overdues_late,
+        'overdues_in_calendar': json.dumps(overdues_in_calendar),
+        'sessions_in_calendar': json.dumps(sessions_in_calendar)
     }
 
     return render(request, 'my_book/index.html', context)
@@ -105,7 +130,14 @@ def my_clubs(request):
     for member in members:
         clubs.append(member.club)
         
-    sessions = Session.objects.filter(club__in=clubs)
+    for club in clubs:
+        club.members_count = Member.objects.filter(club=club).count()
+
+    participants = Participant.objects.filter(user=request.user)
+    sessions = []
+    for participant in participants:
+        sessions.append(participant.session)
+
     context = {
         'clubs': clubs,
         'sessions': sessions
@@ -115,16 +147,33 @@ def my_clubs(request):
 def join_club(request, club_id):
     club = Club.objects.get(id=club_id)
     member = Member(club=club, user=request.user)
-    if club.capacity == (club.members.count()):
-        messages.error(request, 'La capacité du club est atteinte')
     member.save()
-    return redirect('clubs:clubs')
+    return redirect('members:user_clubs')
 
 def leave_club(request, club_id):
     club = Club.objects.get(id=club_id)
     member = Member.objects.get(club=club, user=request.user)
     member.delete()
-    return redirect('clubs:clubs')
+    sessions = Session.objects.filter(club=club)
+    for session in sessions:
+        try:
+            participant = Participant.objects.get(session=session, user=request.user)
+            participant.delete()
+        except:
+            pass
+    return redirect('members:user_clubs')
+
+def join_session(request, session_id):
+    session = Session.objects.get(id=session_id)
+    participant = Participant(session=session, user=request.user)
+    participant.save()
+    return redirect('members:user_clubs')
+
+def leave_session(request, session_id):
+    session = Session.objects.get(id=session_id)
+    participant = Participant.objects.get(session=session, user=request.user)
+    participant.delete()
+    return redirect('members:user_clubs')
 
 ######################################### BOOKSELLER #########################################
 
@@ -133,6 +182,8 @@ def my_library(request):
     library = Library.objects.get(id=bookseller.library.id)
     overdues = Overdue.objects.filter(library=library)
     clubs = Club.objects.filter(library=library)
+    for club in clubs:
+        club.members_count = Member.objects.filter(club=club).count()
     books = []
     for overdue in overdues:
         book = Book.objects.get(id=overdue.book.id)
@@ -200,6 +251,7 @@ def add_book(request):
 
 def show_club(request, club_id):
     club = Club.objects.get(id=club_id)
+    club.members_count = Member.objects.filter(club=club).count()
     members = Member.objects.filter(club=club)
     sessions = Session.objects.filter(club=club)
     context = {
@@ -242,6 +294,11 @@ def add_club(request):
     }
     return render(request, 'my_library/add_club.html', context)
 
+def delete_member(request, member_id):
+    member = Member.objects.get(id=member_id)
+    member.delete()
+    return redirect('members:user_clubs')
+
 def show_session(request, session_id):
     session = Session.objects.get(id=session_id)
     participants = Participant.objects.filter(session=session)
@@ -273,4 +330,9 @@ def add_session(request, club_id):
 def delete_session(request, session_id):
     session = Session.objects.get(id=session_id)
     session.delete()
+    return redirect('members:user_library')
+
+def delete_participant(request, participant_id):
+    participant = Participant.objects.get(id=participant_id)
+    participant.delete()
     return redirect('members:user_library')

@@ -26,7 +26,6 @@
                                     <a href="">{{ book.title }}</a><br>
                                 {% endfor %}
                             </p>
-                            <a class="btn btn-secondary" href="" class="card-link">Modifier</a>
                         </div>
                     </div>
                 </div>
@@ -36,46 +35,49 @@
                             <h5 class="card-title">Retard(s)</h5>
                             <p class="card-text">
                                 {% for overdue_late in overdues_late %}
+                                <!-- Amenes à la page de profil -->
                                     <a href="">{{ overdues_late.book.title }}</a><br>
                                 {% endfor %}
                             </p>
-                            <a class="btn btn-secondary" href="" class="card-link">Modifier</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="card">
                         <div class="card-body">
+                            <h5 class="card-title">Clubs de la librairie</h5>
+                            <p class="card-text">
+                                <table class="table table-dark table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Nombre de membres</th>
+                                            <th>Livre</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if clubs|length > 0 %}
+                                        {% for club in clubs %}
+                                        <tr>
+                                            <td>{{ club.name }}</td>
+                                            <td>{{ club.members_count }}/{{ club.capacity }}</td>
+                                            <td>{{ club.book.title }}</td>
+                                            <td>
+                                                <a class="btn btn-warning" href="{% url 'members:show_club' club.id %}">Voir</a>
+                                                <a class="btn btn-danger" href="">Supprimer</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td class="text-center" colspan="4">Aucun club</td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </p>
                             <a class="btn btn-secondary" href="{% url 'members:add_club' %}">Ajouter un club</a>
-                            <table class="table table-dark table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nom</th>
-                                        <th>Nombre de membres</th>
-                                        <th>Livre</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {% if clubs|length > 0 %}
-                                    {% for club in clubs %}
-                                    <tr>
-                                        <td>{{ club.name }}</td>
-                                        <td>{{ club.members|length }}/{{ club.capacity }}</td>
-                                        <td>{{ club.book.title }}</td>
-                                        <td>
-                                            <a class="btn btn-warning" href="{% url 'members:show_club' club.id %}">Voir</a>
-                                            <a class="btn btn-danger" href="">Supprimer</a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr>
-                                        <td class="text-center" colspan="4">Aucun club</td>
-                                    </tr>
-                                {% endif %}
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>

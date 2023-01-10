@@ -57,11 +57,10 @@
                 {% for club in clubs %}
                 <tr>
                     <td>{{ club.name }}</td>
-                    <td>{{ club.members|length }}/{{ club.capacity }}</td>
+                    <td>{{ club.members_count }}/{{ club.capacity }}</td>
                     <td>{{ club.book.title }}</td>
                     <td>
                         <a class="btn btn-warning" href="{% url 'members:show_club' club.id %}">Voir</a>
-                        <a class="btn btn-danger" href="">Supprimer</a>
                     </td>
                 </tr>
                 {% endfor %}

@@ -1,0 +1,56 @@
+[
+    {
+        "model": "books.Category",
+        "pk": 1,
+        "fields": {
+            "name": "Manga",
+            "updated_at": "2023-01-07 12:59:29.0868+00",
+            "created_at": "2023-01-07 12:59:29.0868+00"
+        }
+    },
+    {
+        "model": "books.Category",
+        "pk": 2,
+        "fields": {
+            "name": "Policier",
+            "updated_at": "2023-01-07 12:59:29.0868+00",
+            "created_at": "2023-01-07 12:59:29.0868+00"
+        }
+    },
+    {
+        "model": "books.Category",
+        "pk": 3,
+        "fields": {
+            "name": "Horreur",
+            "updated_at": "2023-01-07 12:59:29.0868+00",
+            "created_at": "2023-01-07 12:59:29.0868+00"
+        }
+    },
+    {
+        "model":"books.Category",
+        "pk":4,
+        "fields":{
+            "name":"Science-fiction",
+            "updated_at":"2023-01-07 12:59:29.0868+00",
+            "created_at":"2023-01-07 12:59:29.0868+00"
+        }
+    },
+    {
+        "model":"books.Category",
+        "pk":5,
+        "fields":{
+            "name":"Fantastique",
+            "updated_at":"2023-01-07 12:59:29.0868+00",
+            "created_at":"2023-01-07 12:59:29.0868+00"
+        }
+    },
+    {
+        "model":"books.Category",
+        "pk":6,
+        "fields":{
+            "name":"Thriller",
+            "updated_at":"2023-01-07 12:59:29.0868+00",
+            "created_at":"2023-01-07 12:59:29.0868+00"
+        }
+    }
+]

@@ -13,7 +13,10 @@
             <div class="card-body">
                 <ul class="list-group">
                     {% for participant in participants %}
-                    <li class="list-group-item">{{ participant.user.username }}</li>
+                    <li class="list-group-item">
+                        {{ participant.user.username }}
+                        <a class="btn btn-danger" href="{% url 'members:delete_participant' participant.id %}">Supprimer</a>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
