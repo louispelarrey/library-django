@@ -95,6 +95,7 @@ def dashboard(request):
                 })
 
             context = {
+                'overdues_late': overdues_late,
                 'overdues_in_calendar': json.dumps(overdues_in_calendar),
                 'sessions_in_calendar': json.dumps(sessions_in_calendar)
             }
