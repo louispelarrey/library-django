@@ -12,6 +12,14 @@ from clubs.forms import AddClubForm, AddSessionForm
 import datetime, random, json
 from django.utils import timezone
 
+def my_profile(request, username):
+    try:
+        user = User.objects.get(username=username)
+        context = {'user': user}
+        return render(request, 'my_profile/index.html', context)
+    except:
+        return redirect('home-index')
+
 def login_user(request):
     if request.method == 'POST':
         username = request.POST['username']
