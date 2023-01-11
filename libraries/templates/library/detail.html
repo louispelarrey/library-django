@@ -39,7 +39,7 @@
                                     {% if overdue.status == 'Disponible' %}
                                         <td><a class="btn btn-secondary" href="{% url 'members:add_overdue' overdue.reference %}">Emprunter</a></td>
                                     {% else %}
-                                        <td>Emprunté par {{ overdue.user.username }}</td>
+                                        <td>Emprunté par <a href="{% url 'members:user_profile' overdue.user.username %}">{{ overdue.user.username }}</a></td>
                                     {% endif %}
                                 {% endif %}
                             {% endif %}
