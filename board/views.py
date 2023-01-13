@@ -6,26 +6,33 @@ def board(request):
     if request.method == 'POST':
         name = request.POST['name']
         description = request.POST['description']
-        topic = Topic(name=name, description=description)
+        user = request.user
+        topic = Topic(name=name, description=description, user=user)
         topic.save()
         return redirect('board:board')
+    topics = Topic.objects.filter(is_valid=True)
+    for topic in topics:
+        topic.count_post = Post.objects.filter(topic=topic, is_valid=True).count()
+        topic.last_post = Post.objects.filter(topic=topic, is_valid=True).order_by('-created_at').first()
 
-    topics = Topic.objects.all()
     context = {
         'topics': topics
     }
     return render(request, 'board/index.html', context)
 
-def topic(request, id):
+def topic(request, slug):
     if request.method == 'POST':
+        title = request.POST['title']
         content = request.POST['content']
-        topic = Topic.objects.get(id=id)
-        post = Post(content=content, topic=topic)
+        topic = Topic.objects.get(slug=slug)
+        user = request.user
+        post = Post(content=content, topic=topic, user=user, title=title)
         post.save()
-        return redirect('board:topic', id=id)
+        return redirect('board:topic', slug=slug)
 
-    topic = Topic.objects.get(id=id)
-    posts = Post.objects.filter(topic=topic)
+    topic = Topic.objects.get(slug=slug, is_valid=True)
+    posts = Post.objects.filter(topic=topic, is_valid=True)
+
     context = {
         'topic': topic,
         'posts': posts

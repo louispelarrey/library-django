@@ -7,7 +7,13 @@
   <body>
     {% include "menu.html" %}
 
-    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="content">
+      {% load i18n %}
+      {% language 'fr' %}
+      {% block content %}
+      {% endblock %}
+      {% endlanguage %}
+    </div>
 
     {% block javascript %}{% endblock %}
   </body>
