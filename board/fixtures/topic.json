@@ -1,0 +1,80 @@
+[
+{
+    "model": "board.topic",
+    "pk": 1,
+    "fields": {
+        "name": "Les meilleurs romans de science-fiction de 2022",
+        "slug": "les-meilleurs-romans-de-science-fiction-de-2022",
+        "description": "Dites moi votre top, je suis curieux de savoir ce que vous avez lu et aimé.",
+        "is_valid": true,
+        "updated_at": "2023-01-13T13:07:52.078Z",
+        "created_at": "2023-01-13T13:07:52.078Z",
+        "user": 4
+    }
+},
+{
+    "model": "board.topic",
+    "pk": 2,
+    "fields": {
+        "name": "Les livres de fantasy les plus appréciés",
+        "slug": "les-livres-de-fantasy-les-plus-apprecies",
+        "description": "Quels sont les livres de fantasy que vous avez préférés ? Je suis curieux de savoir ce que vous avez lu et aimé.",
+        "is_valid": true,
+        "updated_at": "2023-01-13T13:38:39.498Z",
+        "created_at": "2023-01-13T13:38:39.498Z",
+        "user": 5
+    }
+},
+{
+    "model": "board.topic",
+    "pk": 3,
+    "fields": {
+        "name": "Inauguration de la nouvelle librairie",
+        "slug": "inauguration-de-la-nouvelle-librairie",
+        "description": "La nouvelle librairie vient d'ouvrir ses portes, venez nombreux pour l'inauguration !",
+        "is_valid": true,
+        "updated_at": "2023-01-22T13:10:13.931Z",
+        "created_at": "2023-01-22T13:10:13.931Z",
+        "user": 2
+    }
+},
+{
+    "model": "board.topic",
+    "pk": 4,
+    "fields": {
+        "name": "Guts ou Griffith ?",
+        "slug": "guts-ou-griffith",
+        "description": "Qui est le mieux dévellopé dans Berserk ? Portez votre choix !",
+        "is_valid": true,
+        "updated_at": "2023-01-22T13:10:13.931Z",
+        "created_at": "2023-01-22T13:10:13.931Z",
+        "user": 4
+    }
+},
+{
+    "model": "board.topic",
+    "pk": 5,
+    "fields": {
+        "name": "Les livres les plus effrayants à lire pour Halloween",
+        "slug": "les-livres-les-plus-effrayants-a-lire-pour-halloween",
+        "description": "Je recommande le livre de Stephen King, Ça. C'est un livre qui m'a vraiment marqué. Et vous ?",
+        "is_valid": true,
+        "updated_at": "2023-01-22T13:10:13.931Z",
+        "created_at": "2023-01-22T13:10:13.931Z",
+        "user": 4
+    }
+},
+{
+    "model": "board.topic",
+    "pk": 5,
+    "fields": {
+        "name": "Les classiques de la littérature que tout le monde devrait lire",
+        "slug": "les-classiques-de-la-litterature-que-tout-le-monde-devrait-lire",
+        "description": "Je recommande les livres de Victor Hugo, Jules Verne, Alexandre Dumas, etc.",
+        "is_valid": true,
+        "updated_at": "2023-01-22T13:10:13.931Z",
+        "created_at": "2023-01-22T13:10:13.931Z",
+        "user": 4
+    }
+}
+]

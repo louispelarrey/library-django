@@ -88,5 +88,23 @@
             "groups": [],
             "user_permissions": []
         }
+    },
+    {
+        "model": "auth.user",
+        "pk": 6,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$sEdjGXj39xAKw6uh5cK9yb$nYhyuY5pP0NDQ+GzXYrNT9tHWAIdHAM1sQVI7m9wt68=",
+            "last_login": "2023-01-09T20:56:25.668Z",
+            "is_superuser": false,
+            "username": "ClientThree",
+            "first_name": "",
+            "last_name": "",
+            "email": "three@user.fr",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-01-07T12:55:34.153Z",
+            "groups": [],
+            "user_permissions": []
+        }
     }
 ]
