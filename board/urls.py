@@ -20,7 +20,7 @@ app_name = 'board'
 
 urlpatterns = [
     path('', views.board, name='board'),
-    path('<int:id>/', views.topic, name='topic'),
+    path('<str:slug>/', views.topic, name='topic'),
     path('<int:topic_id>/delete_post/<int:message_id>/', views.delete_post, name='delete_post'),
     path('delete_topic/<int:id>', views.delete_topic, name='delete_topic'),
 ]
