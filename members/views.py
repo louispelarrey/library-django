@@ -27,7 +27,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('board:board')
+            return redirect('members:dashboard')
         else:
             messages.error(request, 'Le nom de compte ou le mot de passe est incorrect')
     context = {}
