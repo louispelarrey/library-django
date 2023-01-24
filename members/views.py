@@ -222,7 +222,7 @@ def get_reference():
         return reference
 
 def add_book(request):
-    form = AddBookForm()
+    form = AddBookForm(request.FILES or None)
     if request.method == 'POST':
 
         if form.is_valid():
@@ -237,7 +237,8 @@ def add_book(request):
         editor = Editor.objects.get(id=request.POST['editor'])
         collection = Collection.objects.get(id=request.POST['collection'])
         category = Category.objects.get(id=request.POST['category'])
-        book = Book(title=title, description=description ,author=author, editor=editor, collection=collection, category=category)
+        cover = request.FILES['cover']
+        book = Book(title=title, description=description ,cover=cover , author=author, editor=editor, collection=collection, category=category)
         book.save()
 
         reference = get_reference()
