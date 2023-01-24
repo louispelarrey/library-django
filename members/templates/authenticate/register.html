@@ -1,29 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Register</h1>
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-    <form method="post" action="{% url 'members:register' %}">
-        {% csrf_token %}
-        <p>
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username" />
-        </p>
-        <p>
-            <label for="password">Mot de passe:</label>
-            <input type="password" name="password" id="password" />
-        </p>
-        <p>
-            <label for="email">Adresse email:</label>
-            <input type="text" name="email" id="email"/>
-        </p>
-        <p>
-            <input type="submit" name="submit" value="S'inscrire" />
-        </p>
-        <input type="hidden" name="next" value="{{ next }}" />
-    </form>
+<head>
+    <title>Inscription</title>
+</head>
+<body>
+    <div class="container">
+        <div class="mt-5 row d-flex justify-content-center">
+            <div class="card p-3">
+                <h1 class="text-center my-5 font-weight-bold">Inscrivez-vous !</h1>
+                <hr>
+                <div class="card-body"></div>
+                    <form method="post" action="{% url 'members:register' %}">
+                        {% csrf_token %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Pseudo</label>
+                            <input class="form-control mb-2" type="text" name="username" id="username" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Mail</label>
+                            <input class="form-control mb-2" type="text" name="email" id="email" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input class="form-control mb-2" type="password" name="password" id="password" required />
+                        </div>
+                        <div class="mb-3">
+                            <input class="btn btn-secondary mb-2" type="submit" name="submit" value="S'inscrire" />
+                        </div>
+                        <input type="hidden" name="next" value="{{ next }}" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 {% endblock %}
