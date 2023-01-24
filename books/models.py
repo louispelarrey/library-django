@@ -86,13 +86,13 @@ class Book(models.Model):
     title = models.CharField(max_length=255, verbose_name='Titre')
     slug = models.SlugField(max_length=255, blank=True)
     description = models.TextField(verbose_name='Description')
+    cover = models.ImageField(upload_to='covers/', verbose_name='Couverture', null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Auteur')
     editor = models.ForeignKey(Editor, on_delete=models.CASCADE, verbose_name='Editeur')
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE, verbose_name='Collection')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Catégorie')
-
     class Meta:
         verbose_name = 'Livre'
         verbose_name_plural = 'Livres'

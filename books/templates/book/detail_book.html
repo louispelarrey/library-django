@@ -13,6 +13,9 @@
                     <h3 class="text-right">Écrit par {{ book.author }} en 1990</h3>
                 </div>
                 <div class="card-body">
+                    {% if book.cover %}
+                        <img src="{{ book.cover.url }}" alt="Image du livre" class="float-left mr-3">
+                    {% endif %}
                     <p class="card-text">
                         {{ book.description }}
                     </p>

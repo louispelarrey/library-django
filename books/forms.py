@@ -20,7 +20,8 @@ class AddBookForm(forms.Form):
     author = forms.ModelChoiceField(queryset=Author.objects.all())
     editor = forms.ModelChoiceField(queryset=Editor.objects.all())
     collection = forms.ModelChoiceField(queryset=Collection.objects.all())
+    cover = forms.ImageField(required=False)
 
     class Meta:
         model = Book
-        fields = ['title', 'description', 'category', 'author', 'editor', 'collection']
+        fields = ['title', 'description', 'category', 'author', 'editor', 'collection', 'cover']
