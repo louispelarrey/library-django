@@ -12,10 +12,10 @@
                     <h2 class="card-title font-italic">{{ book.title }}</h2>
                     <h3 class="text-right">Écrit par {{ book.author }} en 1990</h3>
                 </div>
+                {% if book.cover %}
+                    <img src="{{ book.cover.url }}" alt="Image du livre" class="card-img-top">
+                {% endif %}
                 <div class="card-body">
-                    {% if book.cover %}
-                        <img src="{{ book.cover.url }}" alt="Image du livre" class="float-left mr-3">
-                    {% endif %}
                     <p class="card-text">
                         {{ book.description }}
                     </p>
