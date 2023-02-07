@@ -60,6 +60,16 @@ def dashboard(request):
             library = Library.objects.get(id=bookseller.library.id)
             overdues = Overdue.objects.filter(library=library)
             overdues_late = overdues.filter(due_date__lt=timezone.now())
+            overdues_in_calendar = []
+            for overdue in overdues:
+                date = overdue.due_date
+                overdues_in_calendar.append({
+                    'title': overdue.book.title,
+                    'start': date.isoformat(),
+                    'end': date.isoformat(),
+                    'url': '/books/detail_book/' + str(overdue.book.pk)
+            })
+
             clubs = Club.objects.filter(library=library)
             for club in clubs:
                 club.members_count = Member.objects.filter(club=club).count()
@@ -71,6 +81,7 @@ def dashboard(request):
                 'books': books,
                 'overdues': overdues,
                 'overdues_late': overdues_late,
+                'overdues_in_calendar': json.dumps(overdues_in_calendar),
                 'clubs': clubs
             }
             return render(request, 'dashboard/bookseller.html', context)
