@@ -3,3 +3,4 @@ data
 # cache
 */migrations/__pycache__
 media/covers/*
+!media/covers/default.jpg

@@ -21,9 +21,9 @@
                     {% for overdue in overdues %}
                     <tr>
                         {% if overdue.book.cover %}
-                            <td><img src="{{ overdue.book.cover.url }}" alt="Image du livre" class="img-thumbnail" style="max-width: 250px;"></td>
+                            <td><img src="{{ overdue.book.cover.url }}" alt="Image du livre" class="img-thumbnail" style="max-width: 150px;"></td>
                         {% else %}
-                            <td></td>
+                            <td><img src="/covers/default.jpg" alt="Image du livre" class="img-thumbnail" style="max-width: 150px;"></td>
                         {% endif %}
                         <td>{{ overdue.book.title }}</td>
                         <td>{{ overdue.book.description }}</td>
