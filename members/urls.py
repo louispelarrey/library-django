@@ -35,6 +35,7 @@ urlpatterns = [
     path('my_sessions/leave/<int:session_id>', views.leave_session, name='leave_session'),
 
     path('my_library/', views.my_library, name='user_library'),
+    path('informations/', views.informations, name='informations'),
     path('add_book/', views.add_book, name='add_book'),
 
     path('clubs/<int:club_id>', views.show_club, name='show_club'),

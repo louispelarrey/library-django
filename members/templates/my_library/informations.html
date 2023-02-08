@@ -1,0 +1,47 @@
+{% include "menu.html" %}
+<html>
+    <head>
+        <title>Informations</title>
+    </head>
+    <body>
+        <h1>Listes des informations disponibles pour les livres</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h2>Auteurs</h2>
+                    <ul>
+                        {% for author in authors %}
+                            <li>{{ author.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <h2>Catégories</h2>
+                    <ul>
+                        {% for category in categories %}
+                            <li>{{ category.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <h2>Editeurs</h2>
+                    <ul>
+                        {% for editor in editors %}
+                            <li>{{ editor.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <h2>Collections</h2>
+                    <ul>
+                        {% for collection in collections %}
+                            <li>{{ collection.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
