@@ -222,6 +222,19 @@ def my_library(request):
     }
     return render(request, 'my_library/index.html', context)
 
+def informations(request):
+    authors = Author.objects.all()
+    editors = Editor.objects.all()
+    collections = Collection.objects.all()
+    categories = Category.objects.all()
+    context = {
+        'authors': authors,
+        'editors': editors,
+        'collections': collections,
+        'categories': categories
+    }
+    return render(request, 'my_library/informations.html', context)
+
 def random_reference():
     return random.randint(100000, 999999)
 

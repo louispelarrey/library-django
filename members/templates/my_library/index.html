@@ -4,7 +4,7 @@
         <title>Ma librairie</title>
     </head>
     <body>
-        <h1>Liste des livres</h1>
+        <h1>Liste des livres de la librairie</h1>
         <a class="btn btn-secondary" href="{% url 'members:add_book' %}">Ajouter un livre</a>
         <table class="table table-dark table-hover">
             <thead>
@@ -37,36 +37,6 @@
             {% else %}
                 <tr>
                     <td colspan="2">Aucun livre</td>
-                </tr>
-            {% endif %}
-            </tbody>
-        </table>
-        <h1>Liste des clubs</h1>
-        <a class="btn btn-secondary" href="{% url 'members:add_club' %}">Ajouter un club</a>
-        <table class="table table-dark table-hover">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Nombre de membres</th>
-                    <th>Livre</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% if clubs|length > 0 %}
-                {% for club in clubs %}
-                <tr>
-                    <td>{{ club.name }}</td>
-                    <td>{{ club.members_count }}/{{ club.capacity }}</td>
-                    <td>{{ club.book.title }}</td>
-                    <td>
-                        <a class="btn btn-warning" href="{% url 'members:show_club' club.id %}">Voir</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td class="text-center" colspan="4">Aucun club</td>
                 </tr>
             {% endif %}
             </tbody>
