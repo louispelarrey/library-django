@@ -9,6 +9,7 @@
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title">{{ session.date }}</h2>
+                <a class="btn btn-danger" href="{% url 'members:delete_session' session.id %}">Supprimer la session</a>
             </div>
             <div class="card-body">
                 <ul class="list-group">
