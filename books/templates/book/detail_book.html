@@ -8,9 +8,18 @@
         <div class="container">
             <h1 class="font-weight-bold mb-3">Fiche du livre</h1>
             <div class="card text-white bg-dark mb-3">
-                <div class="card-header">
-                    <h2 class="card-title font-italic">{{ book.title }}</h2>
-                    <h3 class="text-right">Écrit par {{ book.author }} en 1990</h3>
+                <div class="card-header row">
+                    <div class="col-2">
+                        {% if book.cover %}
+                            <td><img src="{{ book.cover.url }}" alt="Image du livre" class="img-thumbnail" style="max-width: 150px;"></td>
+                        {% else %}
+                            <td><img src="/covers/default.jpg" alt="Image du livre" class="img-thumbnail" style="max-width: 150px;"></td>
+                        {% endif %}
+                    </div>
+                    <div class="col-10">
+                        <h2 class="card-title font-italic">{{ book.title }}</h2>
+                        <h3 class="text-right">Écrit par {{ book.author }} en 1990</h3>
+                    </div>
                 </div>
                 {% if book.cover %}
                     <img src="{{ book.cover.url }}" alt="Image du livre" class="card-img-top">

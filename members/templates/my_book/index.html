@@ -11,6 +11,7 @@
                     <table class="table table-striped table-dark">
                         <thead>
                             <tr>
+                                <th scope="col">Cover</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Auteur</th>
@@ -21,6 +22,11 @@
                         <tbody>
                             {% for overdue in overdues %}
                             <tr>
+                                {% if overdue.book.cover %}
+                                    <td><img src="{{ overdue.book.cover.url }}" alt="Image du livre" class="img-thumbnail" style="max-width: 150px;"></td>
+                                {% else %}
+                                    <td><img src="/covers/default.jpg" alt="Image du livre" class="img-thumbnail" style="max-width: 150px;"></td>
+                                {% endif %}
                                 <td>{{ overdue.book.title }}</td>
                                 <td>{{ overdue.book.description }}</td>
                                 <td>{{ overdue.book.author }}</td>

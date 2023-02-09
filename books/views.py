@@ -15,17 +15,28 @@ def book_index(request):
 def detail_book(request, id):
     book = Book.objects.get(id=id)
     libraries = Library.objects.filter(overdue__book=id, overdue__status='Disponible')
-    bookseller = Bookseller.objects.get(user=request.user)
-    library = Library.objects.get(id=bookseller.library.id)
-    overdues = Overdue.objects.filter(book=id, library=library.id)
-    
+
     context = {
         'book': book,
         'libraries': libraries,
-        'library': library,
-        'bookseller': bookseller,
-        'overdues': overdues,
     }
+
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            bookseller = Bookseller.objects.get(user=request.user)
+            library = Library.objects.get(id=bookseller.library.id)
+            overdues = Overdue.objects.filter(book=id, library=library.id)
+
+            context = {
+                'book': book,
+                'libraries': libraries,
+                'library': library,
+                'bookseller': bookseller,
+                'overdues': overdues,
+            }
+
+            return render(request, 'book/detail_book.html', context)
+
     return render(request, 'book/detail_book.html', context)
 
 def author_index(request):
