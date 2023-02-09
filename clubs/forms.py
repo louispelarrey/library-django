@@ -2,6 +2,7 @@ from django import forms
 from .models import Club, Session
 from books.models import Book
 from libraries.models import Library
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 
 class AddClubForm(forms.Form):
     name = forms.CharField(max_length=100, required=True)
@@ -14,4 +15,4 @@ class AddClubForm(forms.Form):
         fields = ['name', 'description', 'capacity', 'book']
 
 class AddSessionForm(forms.Form):
-    date = forms.DateTimeField(required=True)
+    date = forms.DateField(widget=DatePickerInput(), required=True)

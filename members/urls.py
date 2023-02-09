@@ -44,7 +44,7 @@ urlpatterns = [
     path('members/delete/<int:member_id>', views.delete_member, name='delete_member'),
 
     path('sessions/<int:session_id>', views.show_session, name='show_session'),
-    path('sessions/<int:club_id>/add', views.add_session, name='add_session'),
+    path('sessions/<int:club_id>/add', views.show_session, name='add_session'),
     path('sessions/<int:session_id>/delete', views.delete_session, name='delete_session'),
 
     path('participants/delete/<int:participant_id>', views.delete_participant, name='delete_participant')

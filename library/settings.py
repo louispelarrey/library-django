@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'djgeojson',
     'leaflet',
     'clubs',
+    'bootstrap_datepicker_plus',
 ]
 
 MIDDLEWARE = [

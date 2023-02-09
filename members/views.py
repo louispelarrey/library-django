@@ -295,10 +295,35 @@ def show_club(request, club_id):
     club.members_count = Member.objects.filter(club=club).count()
     members = Member.objects.filter(club=club)
     sessions = Session.objects.filter(club=club)
+    sessions_in_calendar = []
+    for session in sessions:
+        end = session.date + datetime.timedelta(hours=1)
+        sessions_in_calendar.append({
+            'title': session.club.name,
+            'start': session.date.isoformat(),
+            'end': end.isoformat(),
+            'url': '/members/sessions/' + str(session.pk)
+        })
+
+    form = AddSessionForm()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('members:show_club', club_id=str(session.club.pk))
+        else:
+            form = AddSessionForm()
+
+        date = request.POST['date']
+        session = Session(date=date, club=club)
+        session.save()
+        return redirect('members:show_club', club_id=str(session.club.pk))
+
     context = {
         'club': club,
         'members': members,
-        'sessions': sessions
+        'sessions': sessions,
+        'sessions_in_calendar': json.dumps(sessions_in_calendar),
+        'form': form
     }
     return render(request, 'my_library/show_club.html', context)
 
@@ -349,29 +374,10 @@ def show_session(request, session_id):
     }
     return render(request, 'my_library/show_session.html', context)
 
-def add_session(request, club_id):
-    club = Club.objects.get(id=club_id)
-    form = AddSessionForm()
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return redirect('members:user_library')
-        else:
-            form = AddSessionForm()
-
-        date = request.POST['date']
-        session = Session(date=date, club=club)
-        session.save()
-        return redirect('members:user_library')
-    context = {
-        'form': form
-    }
-    return render(request, 'my_library/add_session.html', context)
-
 def delete_session(request, session_id):
     session = Session.objects.get(id=session_id)
     session.delete()
-    return redirect('members:user_library')
+    return redirect('members:show_club', club_id=session.club.pk)
 
 def delete_participant(request, participant_id):
     participant = Participant.objects.get(id=participant_id)
