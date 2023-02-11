@@ -48,7 +48,10 @@ INSTALLED_APPS = [
     'leaflet',
     'clubs',
     'bootstrap_datepicker_plus',
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

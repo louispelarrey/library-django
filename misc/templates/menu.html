@@ -32,14 +32,14 @@
       </li>
       {% if user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="/members/logout_user/">Se déconnecter</a>
+        <a class="nav-link" href="{% url 'members:logout' %}">Se déconnecter</a>
       </li>
       {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="/members/login_user">Connexion</a>
+          <a class="nav-link" href="{% url 'members:login' %}">Connexion</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/members/register_user">S'enregistrer</a>
+          <a class="nav-link" href="{% url 'members:register' %}">S'enregistrer</a>
         </li>
       {% endif %}
     </ul>

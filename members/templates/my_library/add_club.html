@@ -4,13 +4,20 @@
         <title>Club</title>
     </head>
     <body>
-        <h1>Ajouter un club</h1>
-        <form method="POST">
-            {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
-            <input type="submit" value="Ajouter">
-        </form>
+        {% load crispy_forms_tags %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Ajouter un club</h1>
+                    <div class="form-group">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <input class="btn btn-success" type="submit" value="Ajouter">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
