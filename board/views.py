@@ -1,14 +1,24 @@
 from django.shortcuts import render, redirect
 from django import views
+from django.contrib import messages
+from django.db import IntegrityError
 from board.models import Topic, Post
 
 def board(request):
-    if request.method == 'POST':
-        name = request.POST['name']
-        description = request.POST['description']
-        user = request.user
-        topic = Topic(name=name, description=description, user=user)
-        topic.save()
+    try :
+        if request.method == 'POST':
+            name = request.POST['name']
+            description = request.POST['description']
+            user = request.user
+            topic = Topic(name=name, description=description, user=user)
+            topic.save()
+            messages.success(request, 'Le sujet a bien été créé')
+            return redirect('board:board')
+    except IntegrityError:
+        messages.error(request, 'Ce sujet existe déjà')
+        return redirect('board:board')
+    except :
+        messages.error(request, 'Une erreur est survenue')
         return redirect('board:board')
     topics = Topic.objects.filter(is_valid=True)
     for topic in topics:
@@ -21,13 +31,18 @@ def board(request):
     return render(request, 'board/index.html', context)
 
 def topic(request, slug):
-    if request.method == 'POST':
-        title = request.POST['title']
-        content = request.POST['content']
-        topic = Topic.objects.get(slug=slug)
-        user = request.user
-        post = Post(content=content, topic=topic, user=user, title=title)
-        post.save()
+    try :
+        if request.method == 'POST':
+            title = request.POST['title']
+            content = request.POST['content']
+            topic = Topic.objects.get(slug=slug)
+            user = request.user
+            post = Post(content=content, topic=topic, user=user, title=title)
+            post.save()
+            messages.success(request, 'Le message a bien été créé')
+            return redirect('board:topic', slug=slug)
+    except :
+        messages.error(request, 'Une erreur est survenue')
         return redirect('board:topic', slug=slug)
 
     topic = Topic.objects.get(slug=slug, is_valid=True)
