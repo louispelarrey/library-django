@@ -25,3 +25,13 @@ class AddBookForm(forms.Form):
     class Meta:
         model = Book
         fields = ['title', 'description', 'category', 'author', 'editor', 'collection', 'cover']
+
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'author': forms.Select(attrs={'class': 'form-control'}),
+            'editor': forms.Select(attrs={'class': 'form-control'}),
+            'collection': forms.Select(attrs={'class': 'form-control'}),
+            'cover': forms.FileInput(attrs={'class': 'form-control'}),
+        }

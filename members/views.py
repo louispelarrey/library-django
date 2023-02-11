@@ -27,11 +27,11 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request, 'Vous êtes connecté')
             return redirect('members:dashboard')
         else:
-            messages.error(request, 'Le nom de compte ou le mot de passe est incorrect')
-    context = {}
-    return render(request, 'authenticate/login.html', context)
+            messages.error(request, 'Le pseudo ou le mot de passe est incorrect')
+    return render(request, 'authenticate/login.html')
 
 def logout_user(request):
     logout(request)
@@ -136,19 +136,27 @@ def my_books(request):
     return render(request, 'my_book/index.html', context)
 
 def add_overdue(request, reference):
-    overdue = Overdue.objects.get(reference=reference)
-    overdue.loan_date = datetime.datetime.now()
-    overdue.due_date = datetime.datetime.now() + datetime.timedelta(days=7)
-    overdue.status = 'Indisponible'
-    overdue.user = User.objects.get(id=request.user.id)
-    overdue.save()
+    try :
+        overdue = Overdue.objects.get(reference=reference)
+        overdue.loan_date = datetime.datetime.now()
+        overdue.due_date = datetime.datetime.now() + datetime.timedelta(days=7)
+        overdue.status = 'Indisponible'
+        overdue.user = User.objects.get(id=request.user.id)
+        overdue.save()
+        messages.success(request, 'Le livre a été emprunté')
+    except :
+        messages.error(request, 'Le livre n\'a pas été emprunté')
     return redirect('books:books')
     
 def edit_overdue(request, reference):
-    overdue = Overdue.objects.get(reference=reference)
-    overdue.status = 'Disponible'
-    overdue.user = None
-    overdue.save()
+    try :
+        overdue = Overdue.objects.get(reference=reference)
+        overdue.status = 'Disponible'
+        overdue.user = None
+        overdue.save()
+        messages.success(request, 'Le livre a été rendu')
+    except :
+        messages.error(request, 'Le livre n\'a pas été rendu')
     return redirect('members:user_books')
 
 def my_clubs(request):
@@ -172,34 +180,50 @@ def my_clubs(request):
     return render(request, 'my_club/index.html', context)
 
 def join_club(request, club_id):
-    club = Club.objects.get(id=club_id)
-    member = Member(club=club, user=request.user)
-    member.save()
+    try :
+        club = Club.objects.get(id=club_id)
+        member = Member(club=club, user=request.user)
+        member.save()
+        messages.success(request, 'Vous avez rejoint le club ' + club.name)
+    except :
+        messages.error(request, 'Vous n\'avez pas rejoint le club' + club.name)
     return redirect('members:user_clubs')
 
 def leave_club(request, club_id):
-    club = Club.objects.get(id=club_id)
-    member = Member.objects.get(club=club, user=request.user)
-    member.delete()
-    sessions = Session.objects.filter(club=club)
-    for session in sessions:
-        try:
-            participant = Participant.objects.get(session=session, user=request.user)
-            participant.delete()
-        except:
-            pass
+    try :
+        club = Club.objects.get(id=club_id)
+        member = Member.objects.get(club=club, user=request.user)
+        member.delete()
+        sessions = Session.objects.filter(club=club)
+        for session in sessions:
+            try:
+                participant = Participant.objects.get(session=session, user=request.user)
+                participant.delete()
+            except:
+                pass
+        messages.success(request, 'Vous avez quitté le club ' + club.name)
+    except :
+        messages.error(request, 'Vous n\'avez pas quitté le club' + club.name)
     return redirect('members:user_clubs')
 
 def join_session(request, session_id):
-    session = Session.objects.get(id=session_id)
-    participant = Participant(session=session, user=request.user)
-    participant.save()
+    try :
+        session = Session.objects.get(id=session_id)
+        participant = Participant(session=session, user=request.user)
+        participant.save()
+        messages.success(request, 'Vous avez rejoint la session')
+    except :
+        messages.error(request, 'Vous n\'avez pas rejoint la session')
     return redirect('members:user_clubs')
 
 def leave_session(request, session_id):
-    session = Session.objects.get(id=session_id)
-    participant = Participant.objects.get(session=session, user=request.user)
-    participant.delete()
+    try :
+        session = Session.objects.get(id=session_id)
+        participant = Participant.objects.get(session=session, user=request.user)
+        participant.delete()
+        messages.success(request, 'Vous avez quitté la session')
+    except :
+        messages.error(request, 'Vous n\'avez pas quitté la session')
     return redirect('members:user_clubs')
 
 ######################################### BOOKSELLER #########################################

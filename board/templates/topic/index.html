@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <div class="card">
         <div class="card-body bg-dark text-light">
             <div class="row">
@@ -29,6 +43,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6">
+                                    <p class="font-weight-bold">{{ post.title }}</p>
                                     <p class="card-text">{{ post.content }}</p>
                                 </div>
                                 <div class="col-6 text-right">
