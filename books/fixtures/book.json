@@ -1,0 +1,77 @@
+[
+    {
+        "model": "books.book",
+        "pk": 1,
+        "fields": {
+            "title": "Berserk tome 1",
+            "slug": "berserk-tome-1",
+            "description": "Guts est un guerrier solitaire à l’épée démesurée. Marqué par un terrible passé, il parcourt le monde en semant la mort sur son passage",
+            "updated_at": "2023-01-10T12:57:16.774Z",
+            "created_at": "2023-01-10T12:57:16.774Z",
+            "author": 5,
+            "editor": 3,
+            "collection": 3,
+            "category": 1
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 2,
+        "fields": {
+            "title": "Berserk tome 2",
+            "slug": "berserk-tome-2",
+            "description": "Guts est un guerrier solitaire à l’épée démesurée. Marqué par un terrible passé, il parcourt le monde en semant la mort sur son passage",
+            "updated_at": "2023-01-10T12:57:16.774Z",
+            "created_at": "2023-01-10T12:57:16.774Z",
+            "author": 5,
+            "editor": 3,
+            "collection": 3,
+            "category": 1
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 3,
+        "fields": {
+            "title": "Berserk tome 3",
+            "slug": "berserk-tome-3",
+            "description": "Guts est un guerrier solitaire à l’épée démesurée. Marqué par un terrible passé, il parcourt le monde en semant la mort sur son passage",
+            "updated_at": "2023-01-10T12:57:16.774Z",
+            "created_at": "2023-01-10T12:57:16.774Z",
+            "author": 5,
+            "editor": 3,
+            "collection": 3,
+            "category": 1
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 4,
+        "fields": {
+            "title": "Game of Thrones",
+            "slug": "game-of-thrones",
+            "description": "Le Trône de fer (A Song of Ice and Fire) est une série de romans de fantasy de George R. R. Martin, dont l'écriture et la parution sont en cours.",
+            "updated_at": "2023-01-10T12:58:15.829Z",
+            "created_at": "2023-01-10T12:58:15.829Z",
+            "author": 3,
+            "editor": 2,
+            "collection": 2,
+            "category": 5
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 5,
+        "fields": {
+            "title": "Le Silmarillion",
+            "slug": "le-silmarillion",
+            "description": "Après une introduction cosmogonique (« Ainulindalë ») puis une présentation des Valar, les puissances qui gouvernent le monde (« Valaquenta »), le cœur de l'ouvrage est constitué par le Quenta Silmarillion, un long récit des malheurs et exploits des Elfes jusqu'à la chute de Morgoth.",
+            "updated_at": "2023-01-10T12:58:15.829Z",
+            "created_at": "2023-01-10T12:58:15.829Z",
+            "author": 2,
+            "editor": 2,
+            "collection": 2,
+            "category": 5
+        }
+    }
+]

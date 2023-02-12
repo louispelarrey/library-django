@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="font-weight-bold mb-3">Bienvenue sur la partie forum</h1>
+    <h1 class="font-weight-bold mb-3">Liste de tous les sujets</h1>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <table class="table table-striped table-dark table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Sujet</th>
+                <th scope="col">Description</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Messages</th>
+                <th scope="col">Dernier message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if topics|length > 0 %}
+                {% for topic in topics %}
+                <tr>
+                    <td><a href="{% url 'board:topic' topic.slug %}"><b>{{topic.name}}</b></a></td>
+                    <td>{{topic.description}}</td>
+                    <td>
+                        {{topic.user}}
+                        {% if topic.user.is_staff %}
+                            <span class="badge badge-warning">Libraire</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ topic.count_post }}</td>
+                    <td>{{ topic.last_post.created_at }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td class="text-center" colspan="4">Aucun sujet</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <form method="POST">
+                    {% csrf_token %}
+                    <td>
+                        <input class="form-control" type="text" name="name" placeholder="Nom du topic"/>
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" name="description" placeholder="Description"/>
+                    </td>
+                    <td colspan="3" class="text-center">
+                        <button class="btn btn-secondary" type="submit">Créer un sujet</button>
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

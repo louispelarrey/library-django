@@ -1,0 +1,47 @@
+{% include "menu.html" %}
+{% load i18n %}
+{% language 'fr' %}
+<html>
+    <head>
+        <title>Dashboard user</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h1 class="font-weight-bold mb-3">Mon interface client</h1>
+            <div class="row">
+                <div class="col-9">
+                    <div id="calendar"></div>
+                </div>
+                <div class="col-3">
+                    <h1 class="font-weight-bold mb-3">Retards</h1>
+                    {% for late in overdues_late %}
+                        <div class="alert alert-danger" role="alert">
+                            Le livre <a href="{% url 'books:detail_book' late.book.id %}">{{ late.book }}</a> doit être rendu avant le {{ late.due_date }} !
+                            <br><br>
+                            <a class="btn btn-light" href="{% url 'members:edit_overdue' late.reference %}">Rendre</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.2/index.global.min.js"></script>
+        <script>
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                eventSources: [
+                    {{ sessions_in_calendar|safe }},
+                    {{ overdues_in_calendar|safe }}
+                ]
+            });
+            
+            calendar.render();
+            });
+            
+        </script>
+    </body>
+</html>
+{% endlanguage %}

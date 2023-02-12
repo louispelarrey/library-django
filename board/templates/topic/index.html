@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div class="card">
+        <div class="card-body bg-dark text-light">
+            <div class="row">
+                <div class="col-6">
+                    <h1 class="card-title font-weight-bold">Sujet : {{ topic.name }}</h1>
+                    <p class="card-text">{{ topic.description }}</p>
+                </div>
+                <div class="col-6 text-right">
+                    <div class="card text-dark bg-white">
+                        <div class="card-body">
+                            Auteur : {{ topic.user }}
+                            {% if topic.user.is_staff %}
+                                <span class="badge badge-warning">Libraire</span>
+                            {% endif %}
+                            <br>
+                            Date de publication : {{ topic.created_at }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% if posts|length > 0 %}
+                {% for post in posts %}
+                    <li class="list-group-item">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="font-weight-bold">{{ post.title }}</p>
+                                    <p class="card-text">{{ post.content }}</p>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <p>
+                                        Auteur : {{ post.user }}
+                                        {% if post.user.is_staff %}
+                                            <span class="badge badge-warning">Libraire</span>
+                                        {% endif %}
+                                    </p>
+                                    <p>
+                                        Date de publication : {{ post.created_at }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% else %}
+            <li class="list-group-item">Aucun message</li>
+            {% endif %}
+        </ul>
+        <div class="card-body">
+            <h6 class="card-title font-weight-bold">Répondre</h6>
+            <form method="post">
+                {% csrf_token %}
+                <input class="form-control" type="text" name="title" placeholder="Titre"/>
+                <textarea class="form-control" name="content" placeholder="Message"></textarea>
+                <button class="btn btn-secondary my-2" type="submit">Répondre</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

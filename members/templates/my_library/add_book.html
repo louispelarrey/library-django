@@ -1,0 +1,32 @@
+{% include "menu.html" %}
+<html>
+    <head>
+        <title>Livre</title>
+    </head>
+    <body>
+        {% load crispy_forms_tags %}  
+        <div class="container">
+            <div class="row">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <div class="col-md-12">
+                    <h1>Ajouter un livre</h1>
+                    <div class="form-group">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <input class="btn btn-success" type="submit" value="Ajouter">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

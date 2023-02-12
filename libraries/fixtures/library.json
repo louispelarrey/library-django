@@ -1,0 +1,116 @@
+[
+{
+    "model": "libraries.library",
+    "pk": 1,
+    "fields": {
+        "name": "Manga store",
+        "description": "Librairie de manga, de comics et de jeux de rôles. Ouvert du mardi au samedi de 11h à 19h.",
+        "slug": "manga-store",
+        "geom": {
+            "type": "Point",
+            "coordinates": [
+                2.370772,
+                48.853788
+            ]
+        },
+        "arr": "11",
+        "updated_at": "2023-01-07T13:02:26.094Z",
+        "created_at": "2023-01-07T12:58:21.110Z"
+    }
+},
+{
+    "model": "libraries.library",
+    "pk": 2,
+    "fields": {
+        "name": "Ludo Lire",
+        "description": "Libres à tous les âges, libres à tous les goûts, libres à tous les prix.",
+        "slug": "ludo-lire",
+        "geom": {
+            "type": "Point",
+            "coordinates": [
+                2.373208,
+                48.854247
+            ]
+        },
+        "arr": "11",
+        "updated_at": "2023-01-07T13:16:59.895Z",
+        "created_at": "2023-01-07T13:16:59.895Z"
+    }
+},
+{
+    "model": "libraries.library",
+    "pk": 3,
+    "fields": {
+        "name": "Petite Égypte",
+        "description": "Petite Égypte est une librairie indépendante et généraliste. Elle présente sur deux niveaux un large fonds de références et une sélection de nouveautés en arts, littératures et sciences humaines, jeunesse et bande dessinée, ainsi que des éditions d’artistes (livres, sérigraphies, photographies) et des jeux.",
+        "slug": "petite-egypte",
+        "geom": {
+            "type": "Point",
+            "coordinates": [
+                2.399461,
+                48.86415
+            ]
+        },
+        "arr": "20",
+        "updated_at": "2023-01-10T12:33:35.770Z",
+        "created_at": "2023-01-10T12:33:35.770Z"
+    }
+},
+{
+    "model": "libraries.library",
+    "pk": 4,
+    "fields": {
+        "name": "LIBRAIRIE GOURMANDE",
+        "description": "Plus ancienne librairie spécialisée gastronomie / oenologie au monde",
+        "slug": "librairie-gourmande",
+        "geom": {
+            "type": "Point",
+            "coordinates": [
+                2.340775,
+                48.867735
+            ]
+        },
+        "arr": "2",
+        "updated_at": "2023-01-10T12:34:54.982Z",
+        "created_at": "2023-01-10T12:34:54.982Z"
+    }
+},
+{
+    "model": "libraries.library",
+    "pk": 5,
+    "fields": {
+        "name": "La belle lurette",
+        "description": "Belle librairie au centre de Paris.",
+        "slug": "la-belle-lurette",
+        "geom": {
+            "type": "Point",
+            "coordinates": [
+                2.340732,
+                48.869909
+            ]
+        },
+        "arr": "2",
+        "updated_at": "2023-01-10T12:36:17.186Z",
+        "created_at": "2023-01-10T12:36:17.187Z"
+    }
+},
+{
+    "model": "libraries.library",
+    "pk": 6,
+    "fields": {
+        "name": "Librairie Centre Pompidou",
+        "description": "La librairie du Centre Pompidou est la librairie de référence dans le domaine de la création contemporaine",
+        "slug": "librairie-centre-pompidou",
+        "geom": {
+            "type": "Point",
+            "coordinates": [
+                2.352324,
+                48.860212
+            ]
+        },
+        "arr": "4",
+        "updated_at": "2023-01-10T12:37:53.279Z",
+        "created_at": "2023-01-10T12:37:53.279Z"
+    }
+}
+]

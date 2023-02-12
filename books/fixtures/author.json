@@ -1,0 +1,47 @@
+[
+    {
+        "model": "books.Author",
+        "pk": 1,
+        "fields": {
+            "name": "J. K. Rowling",
+            "updated_at": "2023-01-07 12:59:29.0868+00",
+            "created_at": "2023-01-07 12:59:29.0868+00"
+        }
+    },
+    {
+        "model": "books.Author",
+        "pk": 2,
+        "fields": {
+            "name": "J. R. R. Tolkien",
+            "updated_at": "2023-01-07 12:59:29.0868+00",
+            "created_at": "2023-01-07 12:59:29.0868+00"
+        }
+    },
+    {
+        "model": "books.Author",
+        "pk": 3,
+        "fields": {
+            "name": "George R. R. Martin",
+            "updated_at": "2023-01-07 12:59:29.0868+00",
+            "created_at": "2023-01-07 12:59:29.0868+00"
+        }
+    },
+    {
+        "model": "books.Author",
+        "pk": 4,
+        "fields": {
+            "name": "C. S. Lewis",
+            "updated_at": "2023-01-07 12:59:29.0868+00",
+            "created_at": "2023-01-07 12:59:29.0868+00"
+        }
+    },
+    {
+        "model": "books.Author",
+        "pk": 5,
+        "fields": {
+            "name": "K. Miura",
+            "updated_at": "2023-01-07 12:59:29.0868+00",
+            "created_at": "2023-01-07 12:59:29.0868+00"
+        }
+    }
+]

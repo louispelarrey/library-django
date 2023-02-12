@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Library - {% block title %}{% endblock %}</title>
+  </head>
+
+  <body>
+    {% include "menu.html" %}
+
+    <div id="content">
+      {% load i18n %}
+      {% language 'fr' %}
+      {% block content %}
+      {% endblock %}
+      {% endlanguage %}
+    </div>
+
+    {% block javascript %}{% endblock %}
+  </body>
+</html>

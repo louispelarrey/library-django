@@ -1,0 +1,67 @@
+[
+    {
+        "model": "books.overdue",
+        "pk": 1,
+        "fields": {
+            "reference": "756620",
+            "loan_date": "2023-01-10T13:18:25.211Z",
+            "due_date": "2023-01-10T13:18:25.211Z",
+            "status": "Disponible",
+            "book": 1,
+            "user": 4,
+            "library": 1
+        }
+    },
+    {
+        "model": "books.overdue",
+        "pk": 2,
+        "fields": {
+            "reference": "756621",
+            "loan_date": "2023-01-10T13:18:25.211Z",
+            "due_date": "2023-01-10T13:18:25.211Z",
+            "status": "Disponible",
+            "book": 2,
+            "user": 4,
+            "library": 1
+        }
+    },
+    {
+        "model": "books.overdue",
+        "pk": 3,
+        "fields": {
+            "reference": "756623",
+            "loan_date": "2023-01-10T13:18:25.211Z",
+            "due_date": "2023-01-10T13:18:25.211Z",
+            "status": "Disponible",
+            "book": 3,
+            "user": 5,
+            "library": 1
+        }
+    },
+    {
+        "model": "books.overdue",
+        "pk": 4,
+        "fields": {
+            "reference": "756624",
+            "loan_date": "2023-01-10T13:18:25.211Z",
+            "due_date": "2023-01-10T13:18:25.211Z",
+            "status": "Disponible",
+            "book": 4,
+            "user": 4,
+            "library": 1
+        }
+    },
+    {
+        "model": "books.overdue",
+        "pk": 5,
+        "fields": {
+            "reference": "756625",
+            "loan_date": "2023-01-10T13:18:25.211Z",
+            "due_date": "2023-01-10T13:18:25.211Z",
+            "status": "Disponible",
+            "book": 5,
+            "user": 6,
+            "library": 1
+        }
+    }
+]
